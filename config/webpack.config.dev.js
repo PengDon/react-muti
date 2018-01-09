@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -25,40 +26,42 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const webpackDevConfig = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
-    // Include an alternative client for WebpackDevServer. A client's job is to
-    // connect to WebpackDevServer by a socket and get notified about changes.
-    // When you save a file, the client will either apply hot updates (in case
-    // of CSS changes), or refresh the page (in case of JS changes). When you
-    // make a syntax error, this client will display a syntax error overlay.
-    // Note: instead of the default WebpackDevServer client, we use a custom one
-    // to bring better experience for Create React App users. You can replace
-    // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
-    // Finally, this is your app's code:
-    paths.appIndexJs,
-    // We include the app code last so that if there is a runtime error during
-    // initialization, it doesn't blow up the WebpackDevServer client, and
-    // changing JS code would still trigger a refresh.
-  ],
+  entry: {},
+//[
+//  // We ship a few polyfills by default:
+//  require.resolve('./polyfills'),
+//  // Include an alternative client for WebpackDevServer. A client's job is to
+//  // connect to WebpackDevServer by a socket and get notified about changes.
+//  // When you save a file, the client will either apply hot updates (in case
+//  // of CSS changes), or refresh the page (in case of JS changes). When you
+//  // make a syntax error, this client will display a syntax error overlay.
+//  // Note: instead of the default WebpackDevServer client, we use a custom one
+//  // to bring better experience for Create React App users. You can replace
+//  // the line below with these two lines if you prefer the stock client:
+//  // require.resolve('webpack-dev-server/client') + '?/',
+//  // require.resolve('webpack/hot/dev-server'),
+//  require.resolve('react-dev-utils/webpackHotDevClient'),
+//  // Finally, this is your app's code:
+//  paths.appIndexJs,
+//  // We include the app code last so that if there is a runtime error during
+//  // initialization, it doesn't blow up the WebpackDevServer client, and
+//  // changing JS code would still trigger a refresh.
+//],
   output: {
+  	path:paths.appBuild,
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].bundle.js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
@@ -216,11 +219,11 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
-    // Generates an `index.html` file with the <script> injected.
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.appHtml,
-    }),
+//  // Generates an `index.html` file with the <script> injected.
+//  new HtmlWebpackPlugin({
+//    inject: true,
+//    template: paths.appHtml,
+//  }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -260,3 +263,51 @@ module.exports = {
     hints: false,
   },
 };
+
+const findSync = (startPath) => {
+  let result = [];
+  const finder = (devpath) => {
+    let files = fs.readdirSync(devpath);
+    files.forEach((val, index) => {
+      let fPath = path.join(devpath, val);
+      let stats = fs.statSync(fPath);
+      if (stats.isDirectory()) finder(fPath);
+      if (stats.isFile()) result.push(fPath);
+    });
+
+  }
+  finder(startPath);
+  return result;
+}
+
+// 业务模块入口文件目录,可修改
+let fileNames = findSync('src/models/');
+
+const entryArr = [
+  require.resolve('./polyfills'),
+  require.resolve('react-error-overlay'),
+  require.resolve('react-dev-utils/webpackHotDevClient')
+];
+
+Object.keys(fileNames).forEach((index) => {
+  let arr = fileNames[index].split('\\');
+  let fileName = arr[arr.length - 2];
+  let entriyName = arr[arr.length - 1];
+  if ('index.js' === entriyName) {
+    let oneArr = [...entryArr];
+    oneArr.push(path.resolve(paths.appSrc,"models/"+ fileName + "/"+ entriyName));
+    webpackDevConfig.entry[fileName] = oneArr;
+    // 根据模块个数生成html
+    const plugin = new HtmlWebpackPlugin({
+      filename: fileName + '.html',
+      template: paths.appHtml,
+      inject: true,
+      chunks: [fileName]
+    });
+    webpackDevConfig.plugins.push(plugin);
+  }
+});
+
+console.log(webpackDevConfig);
+
+module.exports = webpackDevConfig;

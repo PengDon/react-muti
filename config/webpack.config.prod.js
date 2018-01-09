@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -49,14 +50,15 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+const webpackProdConfig = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {},
+//[require.resolve('./polyfills'), paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -340,3 +342,60 @@ module.exports = {
     child_process: 'empty',
   },
 };
+
+
+const findSync = (startPath) => {
+  let result = [];
+  const finder = (devpath) => {
+    let files = fs.readdirSync(devpath);
+    files.forEach((val, index) => {
+      let fPath = path.join(devpath, val);
+      let stats = fs.statSync(fPath);
+      if (stats.isDirectory()) finder(fPath);
+      if (stats.isFile()) result.push(fPath);
+    });
+
+  }
+  finder(startPath);
+  return result;
+}
+
+let fileNames = findSync('src/models/');
+
+const entryArr = [
+  require.resolve('./polyfills')
+];
+
+Object.keys(fileNames).forEach((index) => {
+  let arr = fileNames[index].split('\\');
+  let fileName = arr[arr.length - 2];
+  let entriyName = arr[arr.length - 1];
+  if ('index.js' === entriyName) {
+    let oneArr = [...entryArr];
+    oneArr.push(path.resolve(paths.appSrc,"models/"+ fileName + "/"+ entriyName));
+    webpackProdConfig.entry[fileName] = oneArr;
+    // 根据模块个数生成html
+    const plugin = new HtmlWebpackPlugin({
+      filename: fileName + '.html',
+      template: paths.appHtml,
+      inject: true,
+      chunks: [fileName],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    });
+
+    webpackProdConfig.plugins.push(plugin);
+  }
+});
+
+module.exports = webpackProdConfig;
