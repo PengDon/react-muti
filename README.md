@@ -13,7 +13,7 @@ cnpm i
 cnpm start
 ```
 
-### 针对 master基础上进行改造
+### 针对master分支基础上进行改造
 > less 支持，用于解析less语法
 ```
 cnpm i less-loader less --save-dev
