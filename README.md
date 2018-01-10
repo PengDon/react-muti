@@ -19,5 +19,8 @@ cnpm i less-loader less --save-dev
 
 cnpm i whatwg-fetch --save
 
+cnpm i mockjs -g
+
+
 
 

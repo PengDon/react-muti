@@ -1,46 +1,44 @@
 import React, { Component } from 'react';
 import './app.less';
-import 'whatwg-fetch';
-
-const users = [
-  { username: 'Jerry', age: 21, gender: 'male',id:11111 },
-  { username: 'Tomy', age: 22, gender: 'male',id:22222 },
-  { username: 'Lily', age: 19, gender: 'female',id:33333 },
-  { username: 'Lucy', age: 20, gender: 'female',id:44444 }
-]
-
-class User extends Component {
-  render() {
-    const { user } = this.props;
-    return (
-      <div>
-        <div key={user.id}>姓名：{user.username}</div>
-        <div key={user.id}>年龄：{user.age}</div>
-        <div key={user.id}>性别：{user.gender}</div>
-      </div>
-    )
-  }
-}
+import Mock from 'mockjs';
+import axios from 'axios';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       list: []
-    }
+    };
   }
 
-  componentDidMount() {
-    fetch('/sug?code=utf-8&q=%E5%8D%AB%E8%A1%A3')
-      .then(res => res.json())
-      .then(json => {console.log(json);});
+  componentWillMount() {
+    Mock.mock('/home/menu', {
+      'list|1-9': [{
+        'id|+1': 1,
+        'name': '@cname',
+        'text':'@paragraph',
+        'address':'@province',
+        'img':"@image('200x100', '#ffcc33', '#FFF', 'png', 'の')"
+      }]
+    });
+    axios.get('/home/menu').then(data => {
+      console.log(data.data.list);
+      this.setState({ list: data.data.list });
+    });
   }
-
   render() {
+    const names = this.state.list;
+    const nameDom = names.map((obj) =>
+      <li key={obj.id}>
+        <h3>{obj.name}</h3>
+        <p>{obj.address}</p>
+        <p>{obj.text}</p>
+        <img src={obj.img} alt=""/>
+      </li>
+    )
+
     return (
-      <div>
-        {users.map((user) => <User user={user} />)}
-      </div>
+      <div><ul>{nameDom}</ul></div>
     )
   }
 }
