@@ -370,7 +370,7 @@ Object.keys(fileNames).forEach((index) => {
   let arr = fileNames[index].split('\\');
   let fileName = arr[arr.length - 2];
   let entriyName = arr[arr.length - 1];
-  if ('index.js' === entriyName) {
+  if ('main.js' === entriyName) {
     let oneArr = [...entryArr];
     oneArr.push(path.resolve(paths.appSrc,"models/"+ fileName + "/"+ entriyName));
     webpackProdConfig.entry[fileName] = oneArr;

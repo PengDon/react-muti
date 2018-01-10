@@ -23,7 +23,7 @@ class App extends Component {
         <h3>{obj.name}</h3>
         <p>{obj.address}</p>
         <p>{obj.text}</p>
-        <img src={obj.img} alt=""/>
+        <img src={obj.img} alt="" />
       </li>
     )
 
