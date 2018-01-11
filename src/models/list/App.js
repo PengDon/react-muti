@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './app.less';
 
 // 渲染静态数据列表
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
       </li>
     );
     return (
-      <div><ul>{listItems}</ul></div>
+      <div><ul className="red">{listItems}</ul></div>
     );
   }
 }
