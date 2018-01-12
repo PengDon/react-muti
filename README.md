@@ -34,6 +34,14 @@ cnpm i mockjs -g
 ```
 cnpm i react-router-dom --save
 ```
+> 本地搭建静态服务
+```
+cnpm i serve -g
+```
+> 浏览器同步测试工具
+```
+cnpm i browser-sync -g
+```
 
 
 
