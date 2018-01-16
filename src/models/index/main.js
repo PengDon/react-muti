@@ -11,11 +11,12 @@ import {
   } from 'react-router-dom';
 
 
-const {Home,List} = Pages;
+const {Home,List,Digl} = Pages;
 
 const routes = [
   {path:'/',component:Home, exact:true},
-  {path:'/list',component:List}
+  {path:'/list',component:List},
+  {path:'/dialog',component:Digl}
 ];
 
 const App = (props,context)=> (
