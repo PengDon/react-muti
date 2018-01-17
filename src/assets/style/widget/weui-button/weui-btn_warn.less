@@ -14,21 +14,15 @@
 * limitations under the License.
 */
 
-// mixin
-@import "./mixin/mobile";
-@import "./mixin/setOnepx";
-@import "./mixin/setArrow";
-@import "./mixin/text";
+@import "../../base/fn";
 
-
-// variable
-@import "./variable/global";
-@import "./variable/color";
-
-
-@import "./variable/weui-cell";
-@import "./variable/weui-button";
-@import "./variable/weui-msg";
-@import "./variable/weui-grid";
-@import "./variable/weui-progress";
-@import "./variable/weui-dialog";
+.weui-btn_warn {
+    background-color: @weuiBtnWarnBg;
+    &:not(.weui-btn_disabled):visited {
+        color: @weuiBtnFontColor;
+    }
+    &:not(.weui-btn_disabled):active {
+        color: @weuiBtnActiveFontColor;
+        background-color: @weuiBtnWarnActiveBg;
+    }
+}

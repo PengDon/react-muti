@@ -14,21 +14,27 @@
 * limitations under the License.
 */
 
-// mixin
-@import "./mixin/mobile";
-@import "./mixin/setOnepx";
-@import "./mixin/setArrow";
-@import "./mixin/text";
+@import "../../base/fn";
 
+.weui-progress {
+    display: flex;
+    align-items: center;
+}
 
-// variable
-@import "./variable/global";
-@import "./variable/color";
+.weui-progress__bar {
+    background-color: @weuiProgressBg;
+    height: @weuiProgressHeight;
+    flex: 1;
+}
 
+.weui-progress__inner-bar {
+    width: 0;
+    height: 100%;
+    background-color: @weuiProgressColor;
+}
 
-@import "./variable/weui-cell";
-@import "./variable/weui-button";
-@import "./variable/weui-msg";
-@import "./variable/weui-grid";
-@import "./variable/weui-progress";
-@import "./variable/weui-dialog";
+.weui-progress__opr {
+    display: block;
+    margin-left: 15px;
+    font-size: 0;
+}

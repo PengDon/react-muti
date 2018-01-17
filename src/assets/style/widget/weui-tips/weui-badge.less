@@ -14,21 +14,21 @@
 * limitations under the License.
 */
 
-// mixin
-@import "./mixin/mobile";
-@import "./mixin/setOnepx";
-@import "./mixin/setArrow";
-@import "./mixin/text";
+@import "../../base/fn";
 
-
-// variable
-@import "./variable/global";
-@import "./variable/color";
-
-
-@import "./variable/weui-cell";
-@import "./variable/weui-button";
-@import "./variable/weui-msg";
-@import "./variable/weui-grid";
-@import "./variable/weui-progress";
-@import "./variable/weui-dialog";
+.weui-badge {
+    display: inline-block;
+    padding: .15em .4em;
+    min-width: 8px;
+    border-radius: 18px;
+    background-color: #F43530;
+    color: #FFFFFF;
+    line-height: 1.2;
+    text-align: center;
+    font-size: 12px;
+    vertical-align: middle;
+}
+.weui-badge_dot {
+    padding: .4em;
+    min-width: 0;
+}

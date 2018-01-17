@@ -14,21 +14,38 @@
 * limitations under the License.
 */
 
-// mixin
-@import "./mixin/mobile";
-@import "./mixin/setOnepx";
-@import "./mixin/setArrow";
-@import "./mixin/text";
+@import "../../base/fn";
 
-
-// variable
-@import "./variable/global";
-@import "./variable/color";
-
-
-@import "./variable/weui-cell";
-@import "./variable/weui-button";
-@import "./variable/weui-msg";
-@import "./variable/weui-grid";
-@import "./variable/weui-progress";
-@import "./variable/weui-dialog";
+@weuiGalleryOprHeight: 60px;
+.weui-gallery {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    z-index: 1000;
+}
+.weui-gallery__img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: @weuiGalleryOprHeight;
+    left: 0;
+    background: center center no-repeat;
+    background-size: contain;
+}
+.weui-gallery__opr {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #0D0D0D;
+    color: #FFFFFF;
+    line-height: @weuiGalleryOprHeight;
+    text-align: center;
+}
+.weui-gallery__del {
+    display: block;
+}
