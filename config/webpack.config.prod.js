@@ -359,8 +359,8 @@ const findSync = (startPath) => {
   finder(startPath);
   return result;
 }
-
-let fileNames = findSync('src/models/');
+// 入口目录
+let fileNames = findSync('src/route/');
 
 const entryArr = [
   require.resolve('./polyfills')
@@ -370,9 +370,11 @@ Object.keys(fileNames).forEach((index) => {
   let arr = fileNames[index].split('\\');
   let fileName = arr[arr.length - 2];
   let entriyName = arr[arr.length - 1];
-  if ('index.js' === entriyName) {
+  // 入口文件
+  if ('route.js' === entriyName) {
     let oneArr = [...entryArr];
-    oneArr.push(path.resolve(paths.appSrc,"models/"+ fileName + "/"+ entriyName));
+    // 入口目录
+    oneArr.push(path.resolve(paths.appSrc,"route/"+ fileName + "/"+ entriyName));
     webpackProdConfig.entry[fileName] = oneArr;
     // 根据模块个数生成html
     const plugin = new HtmlWebpackPlugin({

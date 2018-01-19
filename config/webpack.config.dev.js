@@ -281,7 +281,7 @@ const findSync = (startPath) => {
 }
 
 // 业务模块入口文件目录,可修改
-let fileNames = findSync('src/models/');
+let fileNames = findSync('src/route/');
 
 const entryArr = [
   require.resolve('./polyfills'),
@@ -293,9 +293,11 @@ Object.keys(fileNames).forEach((index) => {
   let arr = fileNames[index].split('\\');
   let fileName = arr[arr.length - 2];
   let entriyName = arr[arr.length - 1];
-  if ('index.js' === entriyName) {
+  // 入口js名称
+  if ('route.js' === entriyName) {
     let oneArr = [...entryArr];
-    oneArr.push(path.resolve(paths.appSrc,"models/"+ fileName + "/"+ entriyName));
+    // 入口文件相对路径
+    oneArr.push(path.resolve(paths.appSrc,"route/"+ fileName + "/"+ entriyName));
     webpackDevConfig.entry[fileName] = oneArr;
     // 根据模块个数生成html
     const plugin = new HtmlWebpackPlugin({

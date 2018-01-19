@@ -1,6 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React, { Component } from 'react';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+         个人中心
+      </div>
+    );
+  }
+}
+
+export default App;
