@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import '../../assets/style/weui.less';
 import Button from '../../components/button/button';
 import Dialog from '../../components/dialog/dialog';
-import Page from '../../components/page/page';
+// import Page from '../../components/page/page';
+import Page from '../../components/page'
 
 // 渲染静态数据列表
 class App extends Component {
