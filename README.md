@@ -23,3 +23,51 @@
 ~~~
   cnpm i mock --save-dev
 ~~~
+
+## 添加异步组件加载
+1. 在utils目录下新增 asyncComponent.js 文件
+~~~
+import React, {
+    Component
+} from "react";
+
+const asyncComponent = (importComponent) => {
+    class AsyncComponent extends Component {
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                component: null
+            };
+        }
+
+        async componentDidMount() {
+            const { default: component } = await importComponent();
+
+            this.setState({
+                component
+            });
+        }
+
+        render() {
+            const C = this.state.component;
+
+            return C ? < C { ...this.props} /> : null;
+        }
+    }
+
+    return AsyncComponent;
+}
+export default asyncComponent;
+~~~
+1. 在route目录下对应的page.js文件导入asyncComponent支持
+~~~
+import asyncComponent from '../../utils/asyncComponent';
+~~~
+1. 修改models目录下模块引入方式
+~~~
+# old
+import Home from '../../models/index/index';
+# new
+const Home = asyncComponent(()=>import('../../models/index/index'))
+~~~
