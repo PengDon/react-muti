@@ -9,10 +9,11 @@ import {
     // Link
   } from 'react-router-dom';
 
-  const {Home} = Pages;
+  // const {Home,Login} = Pages;
 
   const routes = [
-    {path:'/',component:Home, exact:true}
+    {path:'/',component:Pages.Home, exact:true},
+    {path:'/login',component:Pages.Login}
   ];
   
   const App = (props,context)=> (

@@ -1,4 +1,4 @@
-import Login from '../../models/my/index';
+import Login from '../../models/my/app';
 
 export default {
     Login
