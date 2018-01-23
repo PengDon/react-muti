@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import api from '../../services/login';
+
 
 /**
  * 简版登录实现
@@ -24,18 +26,21 @@ class App extends Component {
     }
 
     // 登录 
-    login = () => {
+    login = async () => {
         // 空值校验
-        if(!this.state.loginName || !this.state.loginPwd){
-           alert("用户名或密码不能为空");
-           return;
-        }
-        // 密码长度校验
-        if(!/^.{6,16}/.test(this.state.loginPwd)){
-            alert("密码格式错误");
+        if (!this.state.loginName || !this.state.loginPwd) {
+            alert("用户名或密码不能为空");
             return;
         }
-        console.log("login");
+        // 获取接口结果 
+        let result = await api.login(this.state);
+        if (result.success) {
+            // 跳转到首页
+            window.location.replace("#/");
+        } else {
+            alert(result.msg);
+            this.setState({ loginName: '', loginPwd: '' });
+        }
     }
 
     render() {

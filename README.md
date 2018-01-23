@@ -1,3 +1,13 @@
+
+
+# 使用步骤
+~~~
+1. git clone https://github.com/PengDon/react-muti.git
+2. 选择分支
+3. cnpm i
+4. yarn start
+~~~
+
 # 在master分支基础上进行以下改造
 
 ## 添加路由支持
@@ -21,7 +31,7 @@
 
 ## 添加mock支持，用于模拟数据
 ~~~
-  cnpm i mock --save-dev
+  cnpm i --save-dev mockjs
 ~~~
 
 ## 添加异步组件加载
@@ -70,4 +80,9 @@ import asyncComponent from '../../utils/asyncComponent';
 import Home from '../../models/index/index';
 # new
 const Home = asyncComponent(()=>import('../../models/index/index'))
+~~~
+
+## 添加axios支持
+~~~
+ cnpm i --save axios
 ~~~
