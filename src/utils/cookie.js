@@ -2,43 +2,52 @@
  * cookie 工具类
  * 
  * @class Cookie
- * @example 
- * let cookie = new Cookie('key');
- * cookie.set('value',expiredays);
- * cookie.get();
- * cookie.del();
  */
 class Cookie {
-    constructor(key) {
-        this.key = key;
-    }
+
+    doc = window.document;
+
     /**
-     * 设置Cookie
-     * @param value 值
-     * @param expiredays 有效时间
-     */
-    set(value, expiredays) {
-        let cookieValue;
-        if (typeof (value) === 'object') {
-            cookieValue = JSON.stringify(value);
-        } else {
-            cookieValue = value;
+    * 设置 Cookie
+    * @param {String} name 名称
+    * @param {String} val 值
+    * @param {Number} expires 单位（秒）
+    * @param {String} domain 域
+    * @param {String} path 所在的目录
+    * @param {Boolean} secure 跨协议传递
+    */
+    set(name, val, expires, domain, path, secure) {
+        val = JSON.stringify(val);
+        let text = String(encodeURIComponent(val)),
+            date = expires;
+        // 从当前时间开始，多少小时后过期
+        if (typeof date === 'number') {
+            date = new Date();
+            date.setTime(date.getTime() + expires * 1000);
         }
-        let data = new Date();
-        data.setDate(data.getDate() + expiredays);
-        document.cookie = `${this.key}=${escape(cookieValue)
-            }${(expiredays == null) ? '' : `;expires=${data.toGMTString()}`}path=/`;
+        date instanceof Date
+            &&
+            (text += '; expires=' + date.toUTCString());
+        !!domain && (text += '; domain=' + domain);
+        text += '; path=' + (path || '/');
+        secure && (text += '; secure');
+        this.doc.cookie = name + '=' + text;
     }
 
-    get() {
-        let m = window.document.cookie.match('(?:^|;)\\s*' + this.key + '=([^;]*)');
-        return (m && m[1]) ? decodeURIComponent(m[1]) : '';
+    /**
+     * 获取 Cookie
+     * @param {String} name
+     * @return {String}
+     */
+    get(name) {
+        let m = this.doc.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
+        return JSON.parse((m && m[1]) ? decodeURIComponent(m[1]) : '');
     }
 
-    del() {
+    del(name) {
         let exp = new Date();
         exp.setTime(exp.getTime() - 1);
-        document.cookie = `${this.key}=0;expires=${new Date(0).toUTCString()}`;
+        document.cookie = `${name}=0;expires=${new Date(0).toUTCString()}`;
     }
 }
 export default new Cookie;

@@ -18,7 +18,8 @@ Mock.mock('/login',function(options){
    if(opts.loginName === login.loginName && opts.loginPwd === login.loginPwd){
      result.success = true;
      result.msg = '登录成功，自动跳转到首页';
-     Cookie.set('login',true);
+     let user = {"isLogin":true,"loginName":opts.loginName};
+     Cookie.set('login',user);
    }
    return result;
 });
