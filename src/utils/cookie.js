@@ -8,16 +8,25 @@ class Cookie {
     doc = window.document;
 
     /**
-    * 设置 Cookie
-    * @param {String} name 名称
-    * @param {String} val 值
-    * @param {Number} expires 单位（秒）
-    * @param {String} domain 域
-    * @param {String} path 所在的目录
-    * @param {Boolean} secure 跨协议传递
-    */
+     * 设置 Cookie
+     * @param {String} name 名称
+     * @param {String} val 值
+     * @param {Number} expires 单位（秒）
+     * @param {String} domain 域
+     * @param {String} path 所在的目录
+     * @param {Boolean} secure 跨协议传递
+     */
     set(name, val, expires, domain, path, secure) {
-        val = JSON.stringify(val);
+        // 对name进行异常处理
+        if(name === '' || name == null){
+            console.error("cookie must have a name");
+            return;
+        }
+        // 设置的值类型判断
+        if (typeof val === 'object') {
+            val = JSON.stringify(val);
+        }
+
         let text = String(encodeURIComponent(val)),
             date = expires;
         // 从当前时间开始，多少小时后过期
@@ -41,7 +50,17 @@ class Cookie {
      */
     get(name) {
         let m = this.doc.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
-        return JSON.parse((m && m[1]) ? decodeURIComponent(m[1]) : '');
+        let val = (m && m[1]) ? decodeURIComponent(m[1]) : '';
+        // 对string类型的值进行特殊判断
+        // 如果可以转对象，则返回对象，否则返回string值
+        if (typeof val === 'string') {
+            try {
+                val = typeof JSON.parse(val) === 'object' ? JSON.parse(val) : val;
+            } catch (error) {
+                throw error;
+            }
+        }
+        return val;
     }
 
     del(name) {
