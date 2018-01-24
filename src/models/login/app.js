@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/login';
-
+import Cookie from '../../utils/cookie';
 
 /**
  * 简版登录实现
@@ -40,6 +40,15 @@ class App extends Component {
         } else {
             alert(result.msg);
             this.setState({ loginName: '', loginPwd: '' });
+        }
+    }
+
+    componentWillMount(){
+        let user = Cookie.get('login');
+        if (user.isLogin) {
+            console.log("已登录，跳转到首页");
+            // 跳转到首页
+            window.location.replace("#/");
         }
     }
 
