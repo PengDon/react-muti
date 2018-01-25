@@ -13,11 +13,11 @@ class App extends Component {
   
   componentWillMount() {
     let user = Cookie.get('login');
-    if(!user.isLogin){
-      console.log("未登录，跳转到登录");
-      // 跳转到登录页面
-      window.location.replace("#/login");
-    }
+    // if(!user.isLogin){
+    //   console.log("未登录，跳转到登录");
+    //   // 跳转到登录页面
+    //   window.location.replace("#/login");
+    // }
     this.setState({userName:user.loginName});
   }
   

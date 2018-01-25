@@ -44,12 +44,12 @@ class App extends Component {
     }
 
     componentWillMount(){
-        let user = Cookie.get('login');
-        if (user.isLogin) {
-            console.log("已登录，跳转到首页");
-            // 跳转到首页
-            window.location.replace("#/");
-        }
+        // let user = Cookie.get('login');
+        // if (user.isLogin) {
+        //     console.log("已登录，跳转到首页");
+        //     // 跳转到首页
+        //     window.location.replace("#/");
+        // }
     }
 
     render() {
