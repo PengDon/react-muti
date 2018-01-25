@@ -20,13 +20,17 @@ class App extends Component {
     // }
     this.setState({userName:user.loginName});
   }
-  
+  // 登出
+  logout(){
+     Cookie.del('login');
+     window.location.replace('#/login');
+  }  
   render() {
     return (
       <div>
         <h1>首页</h1>
         <p>欢迎{this.state.userName}</p>
-        
+        <button onClick={this.logout}>登出</button>
       </div>
     );
   }
