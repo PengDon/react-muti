@@ -1,3 +1,5 @@
+import Util from './util';
+
 /**
  * cookie 工具类
  * 
@@ -51,15 +53,7 @@ class Cookie {
     get(name) {
         let m = this.doc.cookie.match('(?:^|;)\\s*' + name + '=([^;]*)');
         let val = (m && m[1]) ? decodeURIComponent(m[1]) : '';
-        // 对string类型的值进行特殊判断
-        // 如果可以转对象，则返回对象，否则返回string值
-        if (typeof val === 'string') {
-            try {
-                val = typeof JSON.parse(val) === 'object' ? JSON.parse(val) : val;
-            } catch (error) {
-                throw error;
-            }
-        }
+        val = Util.isJsonString(val) ? JSON.parse(val) : val;
         return val;
     }
 
