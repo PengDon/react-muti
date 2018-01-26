@@ -17,6 +17,7 @@ import {
   const routes = [
     {path:'/',component:Pages.Home, exact:true,notCheckLogin:true},
     {path:'/login',component:Pages.Login,notCheckLogin:true},
+    {path:'/detail',component:Pages.Detail,notCheckLogin:true},
     {path:'/my',component:Pages.My}
   ];
 
