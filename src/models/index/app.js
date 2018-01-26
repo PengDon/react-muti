@@ -11,26 +11,38 @@ class App extends Component {
     };
   }
   
-  componentWillMount() {
+  getLoginInfo =()=>{
+    console.log(88888);
     let user = Cookie.get('login');
-    // if(!user.isLogin){
-    //   console.log("未登录，跳转到登录");
-    //   // 跳转到登录页面
-    //   window.location.replace("#/login");
-    // }
     this.setState({userName:user.loginName});
   }
+
+  componentWillMount() {
+    this.getLoginInfo();
+  }
   // 登出
-  logout(){
+  logout=()=>{
      Cookie.del('login');
-     window.location.replace('#/login');
+     this.getLoginInfo();
+    //  window.location.replace('#/login');
   }  
   render() {
     return (
       <div>
         <h1>首页</h1>
         <p>欢迎{this.state.userName}</p>
-        <button onClick={this.logout}>登出</button>
+        <ul>
+      
+            <li> <a href="#/detail">detail</a></li>
+            <li> <a href="#/my">我的页面需要登录验证</a></li>
+          </ul>
+            {
+              this.state.userName ?
+              <button onClick={this.logout}>登出</button>
+            :
+            <a href="#/login">login</a>
+            }
+        
       </div>
     );
   }
