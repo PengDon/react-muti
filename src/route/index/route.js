@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Pages from './page';
 import Cookie from '../../utils/cookie';
@@ -13,12 +13,18 @@ import {
 
   // const {Home,Login} = Pages;
   
-  // notCheckLogin:true ==>表示用验证是否登录
+  const LoginComponent = Pages.Login; // 登录页内容
+  const HomeComponent = Pages.Home; // 首页内容
+ 
+  // notCheckLogin:true ==>表示用验证是否登录  
   const routes = [
-    {path:'/',component:Pages.Home, exact:true,notCheckLogin:true},
-    {path:'/login',component:Pages.Login,notCheckLogin:true},
+    {path:'/',component:HomeComponent, exact:true,notCheckLogin:true},
+    {path:'/login',component:LoginComponent,notCheckLogin:true},
     {path:'/detail',component:Pages.Detail,notCheckLogin:true},
-    {path:'/my',component:Pages.My}
+    {path:'/my',component:Pages.My},
+    {path:'/test',component:Pages.Test,notCheckLogin:true},
+    {path:'/comment',exact:true,component:Pages.compentApp.App},
+    {path:'/comment/id',exact:true,component:Pages.compentApp.Detail}
   ];
 
   const isLogin=()=>{
@@ -45,7 +51,7 @@ import {
     return component;
   }
 
-  const App = (props,context)=> (
+  const App = (props,context)=>(
     <Router>
       <Switch>
         {
@@ -56,6 +62,8 @@ import {
       </Switch>
     </Router>
   )
+  
+  
   
   ReactDOM.render(<App />, document.getElementById('root'));
     
