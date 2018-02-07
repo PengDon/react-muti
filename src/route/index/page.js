@@ -9,6 +9,7 @@ export default {
     Detail:asyncComponent(()=>import('../../models/detail/app')),
     My:asyncComponent(()=>import('../../models/my/app')),
     Test:asyncComponent(()=>import('../../models/test/app')),
+    Shop:asyncComponent(()=>import('../../models/shop/app')),
     compentApp
     // CommentApp:App,
     // CommentDetail:Detail

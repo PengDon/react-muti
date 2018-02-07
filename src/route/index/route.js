@@ -23,6 +23,7 @@ import {
     {path:'/detail',component:Pages.Detail,notCheckLogin:true},
     {path:'/my',component:Pages.My},
     {path:'/test',component:Pages.Test,notCheckLogin:true},
+    {path:'/shop/:id',component:Pages.Shop,notCheckLogin:true},
     {path:'/comment',exact:true,component:Pages.compentApp.App},
     {path:'/comment/id',exact:true,component:Pages.compentApp.Detail}
   ];

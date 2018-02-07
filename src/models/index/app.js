@@ -38,6 +38,7 @@ class App extends Component {
             <li> <a href="#/my">我的页面需要登录验证</a></li>
             <li> <a href="#/test">test</a></li>
             <li> <a href="#/comment">comment</a></li>
+            <li><a href="#/shop/2365">shop</a></li>
           </ul>
             {
               this.state.userName ? <button onClick={this.logout}>登出</button>  :  <a href="#/login">login</a>
