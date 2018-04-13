@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../assets/style/don.less';
-import {confirm} from '../../components/all';
+import tsh from '../../components/all';
 
 class App extends Component {
   
@@ -14,7 +14,7 @@ class App extends Component {
 
   showTip = ()=>{
     // don.alert("德州扒鸡",{ title: '66元一只' });
-    confirm('普通的confirm')
+    tsh.confirm('普通的confirm')
   }
 
   render() {

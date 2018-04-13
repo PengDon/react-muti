@@ -450,7 +450,7 @@ function datePicker(options) {
     return picker(date, defaults);
 }
 
-export default {
+export {
     picker,
     datePicker
 };

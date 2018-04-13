@@ -200,6 +200,6 @@ function compress(file, options, callback) {
     reader.readAsDataURL(file);
 }
 
-export default {
+export {
     compress
 };
