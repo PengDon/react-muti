@@ -1,0 +1,30 @@
+
+@import "../../base/fn";
+
+.don-btn_plain-primary {
+    color: @donBtnPlainPrimaryColor;
+    border: 1px solid @donBtnPlainPrimaryBorderColor;
+    &:not(.don-btn_plain-disabled):active {
+        color:@donBtnPlainPrimaryActiveColor;
+        border-color: @donBtnPlainPrimaryActiveBorderColor;
+    }
+    &:after {
+        border-width: 0;
+    }
+}
+
+.don-btn_plain-default {
+    color: @donBtnPlainDefaultColor;
+    border: 1px solid @donBtnPlainDefaultBorderColor;
+    &:not(.don-btn_plain-disabled):active {
+        color:@donBtnPlainDefaultActiveColor;
+        border-color: @donBtnPlainDefaultActiveBorderColor;
+    }
+    &:after {
+        border-width: 0;
+    }
+}
+.don-btn_plain-disabled{
+    color:rgba(0,0,0,.2);
+    border-color:rgba(0,0,0,.2);
+}

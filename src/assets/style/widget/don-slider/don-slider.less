@@ -1,0 +1,48 @@
+
+@import "../../base/fn";
+
+.don-slider {
+    padding: 15px 18px;
+    user-select: none;
+}
+
+.don-slider__inner {
+    position: relative;
+    height: 2px;
+    background-color: #E9E9E9;
+}
+
+.don-slider__track {
+    height: 2px;
+    background-color: @donColorPrimary;
+    width: 0;
+}
+
+.don-slider__handler {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin-left: -14px;
+    margin-top: -14px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+}
+
+
+.don-slider-box{
+    display: flex;
+    align-items: center;
+    .don-slider{
+        flex: 1;
+    }
+}
+.don-slider-box__value {
+    margin-left: .5em;
+    min-width: 24px;
+    color: #888888;
+    text-align: center;
+    font-size: 14px;
+}

@@ -1,0 +1,36 @@
+
+@import "../../base/fn";
+
+@donGalleryOprHeight: 60px;
+.don-gallery {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    z-index: 1000;
+}
+.don-gallery__img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: @donGalleryOprHeight;
+    left: 0;
+    background: center center no-repeat;
+    background-size: contain;
+}
+.don-gallery__opr {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #0D0D0D;
+    color: #FFFFFF;
+    line-height: @donGalleryOprHeight;
+    text-align: center;
+}
+.don-gallery__del {
+    display: block;
+}

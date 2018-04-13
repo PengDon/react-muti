@@ -1,0 +1,15 @@
+<div class="<% if(isAndroid){ %>don-skin_android <% } %><%= className %>">
+    <div class="don-mask"></div>
+    <div class="don-actionsheet">
+        <div class="don-actionsheet__menu">
+            <% for(var i = 0; i < menus.length; i++){ %>
+            <div class="don-actionsheet__cell"><%= menus[i].label %></div>
+            <% } %>
+        </div>
+        <div class="don-actionsheet__action">
+            <% for(var j = 0; j < actions.length; j++){ %>
+            <div class="don-actionsheet__cell"><%= actions[j].label %></div>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -168,7 +168,7 @@ const webpackProdConfig = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.(css|less)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -207,6 +207,9 @@ const webpackProdConfig = {
                         ],
                       },
                     },
+                    {
+                      loader: require.resolve('less-loader') // compiles Less to CSS
+                    }
                   ],
                 },
                 extractTextPluginOptions
@@ -228,6 +231,15 @@ const webpackProdConfig = {
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
+          },
+          {
+            test: /\.(html)$/,
+            use: {
+              loader: require.resolve('html-loader'),
+              options: {
+                
+              }
+            }
           },
           // ** STOP ** Are you adding a new loader?
           // Make sure to add the new loader(s) before the "file" loader.

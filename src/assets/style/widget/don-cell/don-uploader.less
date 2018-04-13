@@ -1,0 +1,100 @@
+
+@import "../../base/fn";
+
+.don-uploader{}
+.don-uploader__hd{
+    display: flex;
+    padding-bottom: @donCellGapV;
+    align-items: center;
+}
+.don-uploader__title{
+    flex: 1;
+}
+.don-uploader__info{
+    color: @donTextColorTips;
+}
+
+.don-uploader__bd{
+    margin-bottom: @donCellGapH - (@donCellGapV + @donUploaderFileSpacing);
+    margin-right: -@donUploaderFileSpacing;
+    overflow: hidden;
+}
+.don-uploader__files{
+    list-style: none;
+}
+.don-uploader__file{
+    float: left;
+    margin-right: @donUploaderFileSpacing;
+    margin-bottom: @donUploaderFileSpacing;
+    width: @donUploaderSize;
+    height: @donUploaderSize;
+    background: no-repeat center center;
+    background-size: cover;
+}
+.don-uploader__file_status{
+    position: relative;
+    &:before{
+        content: " ";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, .5);
+    }
+    .don-uploader__file-content{
+        display: block;
+    }
+}
+.don-uploader__file-content{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    .don-icon-warn{
+        display: inline-block;
+    }
+}
+.don-uploader__input-box{
+    float:left;
+    position: relative;
+    margin-right: @donUploaderFileSpacing;
+    margin-bottom: @donUploaderFileSpacing;
+    width: @donUploaderSize - @donUploaderBorderWidth * 2;
+    height: @donUploaderSize - @donUploaderBorderWidth * 2;
+    border: @donUploaderBorderWidth solid @donUploaderBorderColor;
+    &:before, &:after{
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: @donUploaderBorderColor;
+    }
+    &:before{
+        width: @donUploaderBorderWidth + 1;
+        height: @donUploaderSize / 2;
+    }
+    &:after{
+        width: @donUploaderSize / 2;
+        height: @donUploaderBorderWidth + 1;
+    }
+    &:active{
+        border-color: @donUploaderActiveBorderColor;
+        &:before, &:after{
+            background-color: @donUploaderActiveBorderColor;
+        }
+    }
+}
+.don-uploader__input{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    .setTapColor();
+}

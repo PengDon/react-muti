@@ -1,0 +1,13 @@
+
+@import "../../base/fn";
+
+.don-btn_warn {
+    background-color: @donBtnWarnBg;
+    &:not(.don-btn_disabled):visited {
+        color: @donBtnFontColor;
+    }
+    &:not(.don-btn_disabled):active {
+        color: @donBtnActiveFontColor;
+        background-color: @donBtnWarnActiveBg;
+    }
+}

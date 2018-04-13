@@ -1,0 +1,24 @@
+
+@import "../../../base/fn";
+
+// method2 accessbility
+.don-cells_radio{
+    .don-cell__ft {
+        padding-left: @donCellInnerGapH;
+    }
+}
+.don-check {
+    // radio
+    .don-cells_radio & {
+        &:checked {
+            & + .don-icon-checked {
+                &:before {
+                    display: block;
+                    content: '\EA08';
+                    color: #09BB07;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}

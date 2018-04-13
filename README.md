@@ -86,3 +86,5 @@ const Home = asyncComponent(()=>import('../../models/index/index'))
 ~~~
  cnpm i --save axios
 ~~~
+
+## 添加js常用组件和样式

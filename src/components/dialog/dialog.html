@@ -1,0 +1,14 @@
+<div class="<%=className%>">
+    <div class="don-mask"></div>
+    <div class="don-dialog <% if(isAndroid){ %> don-skin_android <% } %>">
+        <% if(title){ %>
+        <div class="don-dialog__hd"><strong class="don-dialog__title"><%=title%></strong></div>
+        <% } %>
+        <div class="don-dialog__bd"><%=content%></div>
+        <div class="don-dialog__ft">
+            <% for(var i = 0; i < buttons.length; i++){ %>
+            <a href="javascript:;" class="don-dialog__btn don-dialog__btn_<%=buttons[i]['type']%>"><%=buttons[i]['label']%></a>
+            <% } %>
+        </div>
+    </div>
+</div>

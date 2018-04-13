@@ -1,0 +1,31 @@
+
+@import "../../../base/fn";
+
+.don-cells_checkbox {
+    .don-cell__hd {
+        padding-right: @donCellInnerGapH;
+    }
+    .don-icon-checked {
+        &:before {
+            content: '\EA01';
+            color: #C9C9C9;
+            font-size: 23px;
+            display: block;
+        }
+    }
+}
+
+// method2 accessbility
+.don-check {
+    // checkbox
+    .don-cells_checkbox & {
+        &:checked {
+            & + .don-icon-checked {
+                &:before {
+                    content: '\EA06';
+                    color: #09BB07;
+                }
+            }
+        }
+    }
+}

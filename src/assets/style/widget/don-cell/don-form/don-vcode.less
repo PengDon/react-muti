@@ -1,0 +1,35 @@
+
+@import "../../../base/fn";
+
+.don-cell_vcode {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+.don-vcode-img{
+    margin-left: 5px;
+    height: @donCellHeight;
+    vertical-align: middle;
+}
+
+.don-vcode-btn {
+    display: inline-block;
+    height: @donCellHeight;
+    margin-left: 5px;
+    padding: 0 0.6em 0 0.7em;
+    border-left: 1px solid @donLineColorLight;
+    line-height: @donCellHeight;
+    vertical-align: middle;
+    font-size: @donCellFontSize;
+    color: @donDialogLinkColor;
+    button&{
+        background-color: transparent;
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 0;
+        outline: 0;
+    }
+    &:active {
+        color: desaturate(@donDialogLinkColor, 30%);
+    }
+}

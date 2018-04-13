@@ -1,0 +1,91 @@
+
+@import "../../../base/fn";
+
+.don-form-preview{
+    position: relative;
+    background-color: #FFFFFF;
+    &:before{
+        .setTopLine(@donCellBorderColor);
+    }
+    &:after{
+        .setBottomLine(@donCellBorderColor);
+    }
+}
+.don-form-preview__hd{
+    position: relative;
+    padding: @donCellGapV @donCellGapH;
+    text-align: right;
+    line-height: 2.5em;
+    &:after{
+        .setBottomLine(@donCellBorderColor);
+        left: @donCellGapH;
+    }
+    .don-form-preview__value{
+        font-style: normal;
+        font-size: 1.6em;
+    }
+}
+.don-form-preview__bd{
+    padding: @donCellGapV @donCellGapH;
+    font-size: .9em;
+    text-align: right;
+    color: @donTextColorGray;
+    line-height: 2;
+}
+.don-form-preview__ft{
+    position: relative;
+    line-height: 50px;
+    display: flex;
+    &:before {
+        .setTopLine(@donDialogLineColor);
+    }
+}
+.don-form-preview__item{
+    overflow: hidden;
+}
+.don-form-preview__label{
+    float: left;
+    margin-right: 1em;
+    min-width: 4em;
+    color: @donTextColorGray;
+    text-align: justify;
+    text-align-last: justify;
+}
+.don-form-preview__value{
+    display: block;
+    overflow: hidden;
+    word-break:normal;
+    word-wrap: break-word;
+}
+.don-form-preview__btn {
+    position: relative;
+    display: block;
+    flex: 1;
+    color: @donDialogLinkColor;
+    text-align: center;
+    .setTapColor();
+    button&{
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        line-height: inherit;
+        font-size: inherit;
+    }
+    &:active {
+        background-color: @donDialogLinkActiveBc;
+    }
+    &:after {
+        .setLeftLine(@donDialogLineColor);
+    }
+    &:first-child {
+        &:after {
+            display: none;
+        }
+    }
+}
+.don-form-preview__btn_default {
+    color: @donTextColorGray;
+}
+.don-form-preview__btn_primary {
+    color: #0BB20C;
+}

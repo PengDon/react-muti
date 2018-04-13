@@ -1,0 +1,103 @@
+@import "../../base/fn";
+@donActionSheetAndroidBorderRadius: 2px;
+
+.don-actionsheet {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translate(0, 100%);
+    backface-visibility: hidden;
+    z-index: 5000;
+    width: 100%;
+    background-color: @donBgColorDefault;
+    //slide up animation
+    transition: transform .3s;
+}
+.don-actionsheet__title {
+    position: relative;
+    height: 65px;
+    padding: 0 20px;
+    line-height: 1.4;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    background: #FCFCFD;
+    &:before {
+        .setBottomLine(@donCellBorderColor);
+    }
+    .don-actionsheet__title-text {
+        .ellipsisLn(2);
+    }
+}
+.don-actionsheet__menu{
+    background-color: #FCFCFD;
+}
+.don-actionsheet__action {
+    margin-top: 6px;
+    background-color: #FCFCFD;;
+}
+.don-actionsheet__cell {
+    position: relative;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 18px;
+    &:before {
+        .setTopLine(@donCellBorderColor);
+    }
+    &:active{
+        background-color: @donBgColorActive;
+    }
+    &:first-child{
+        &:before{
+            display: none;
+        }
+    }
+}
+
+
+//android actionSheet
+.don-skin_android{
+    .don-actionsheet {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
+        //padding: 0 40px;
+        width: 274px;
+        box-sizing: border-box;
+        backface-visibility: hidden;
+        background: transparent;
+        //slide up animation
+        transition: transform .3s;
+    }
+    .don-actionsheet__action{
+        display: none;
+    }
+    .don-actionsheet__menu {
+        border-radius: @donActionSheetAndroidBorderRadius;
+        box-shadow: 0 6px 30px 0 rgba(0,0,0,.1);
+    }
+    .don-actionsheet__cell {
+        padding: 13px 24px;
+        font-size: 16px;
+        line-height: 1.4;
+        text-align: left;
+        &:first-child {
+            border-top-left-radius: @donActionSheetAndroidBorderRadius;
+            border-top-right-radius: @donActionSheetAndroidBorderRadius;
+        }
+        &:last-child {
+            border-bottom-left-radius: @donActionSheetAndroidBorderRadius;
+            border-bottom-right-radius: @donActionSheetAndroidBorderRadius;
+        }
+    }
+}
+
+//actionSheet aniamtion
+.don-actionsheet_toggle{
+    transform: translate(0, 0);
+}

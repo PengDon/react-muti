@@ -1,0 +1,46 @@
+
+@import "../../base/fn";
+@import "../don-button/don-button";
+
+.don-msg {
+    padding-top: @donMsgPaddingTop;
+    text-align: center;
+}
+.don-msg__icon-area {
+    margin-bottom: @donMsgIconGap;
+}
+.don-msg__text-area {
+    margin-bottom: @donMsgTextGap;
+    padding:0 20px;
+}
+.don-msg__text-area a{
+    color:@donLinkColorDefault;
+}
+.don-msg__title {
+    margin-bottom: @donMsgTitleGap;
+    font-weight: 400;
+    font-size: 20px;
+}
+.don-msg__desc {
+    font-size: 14px;
+    color: @donTextColorGray;
+}
+.don-msg__opr-area {
+    margin-bottom: @donMsgOprGap;
+}
+.don-msg__extra-area {
+    margin-bottom: @donMsgExtraAreaGap;
+    font-size: 14px;
+    color: @donTextColorGray;
+    a{color: @donLinkColorDefault;}
+}
+
+@media screen and (min-height: @donMsgExtraAreaOfMinHeight) {
+    .don-msg__extra-area {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+}

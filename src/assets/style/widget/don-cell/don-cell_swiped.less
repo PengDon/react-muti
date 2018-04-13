@@ -1,0 +1,32 @@
+
+@import "../../base/fn";
+
+.don-cell_swiped {
+    display: block;
+    padding: 0;
+    > .don-cell__bd {
+        position: relative;
+        z-index: 1;
+        background-color: #FFFFFF;
+    }
+    > .don-cell__ft {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        color: #FFFFFF;
+    }
+}
+.don-swiped-btn {
+    display: block;
+    padding: @donCellGapV 1em;
+    line-height: @donCellLineHeight;
+    color: inherit;
+}
+.don-swiped-btn_default {
+    background-color: #C7C7CC;
+}
+.don-swiped-btn_warn {
+    background-color: #FF3B30;
+}

@@ -1,0 +1,62 @@
+
+@import "../../base/fn";
+@import "don-btn_global";
+@import "don-btn_default";
+@import "don-btn_primary";
+@import "don-btn_warn";
+@import "don-btn_disabled";
+@import "don-btn_loading";
+@import "don-btn_plain";
+
+button, input {
+    &.don-btn {
+        width: 100%;
+        border-width: 0;
+        outline: 0;
+        -webkit-appearance: none;
+        &:focus {
+            outline: 0;
+        }
+    }
+    &.don-btn_inline,&.don-btn_mini {
+        width: auto;
+    }
+    &.don-btn_plain-primary,&.don-btn_plain-default{
+        border-width: 1px;
+        background-color: transparent;
+    }
+}
+
+.don-btn_mini {
+    display: inline-block;
+    padding: 0 1.32em;
+    line-height: @donBtnMiniHeight;
+    font-size: @donBtnMiniFontSize;
+}
+
+
+/*gap between btn*/
+.don-btn + .don-btn {
+    margin-top: @donBtnDefaultGap;
+}
+
+.don-btn.don-btn_inline + .don-btn.don-btn_inline {
+    margin-top: auto;
+    margin-left: @donBtnDefaultGap;
+}
+
+.don-btn-area {
+    margin: @donCellsMarginTop @donBtnDefaultGap .3em; 
+}
+.don-btn-area_inline {
+    display: flex;
+    .don-btn {
+        margin-top: auto;
+        margin-right: @donBtnDefaultGap;
+        width: 100%;
+        flex: 1;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

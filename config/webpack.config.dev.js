@@ -160,7 +160,7 @@ const webpackDevConfig = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.css$/,
+            test: /\.(css|less)$/,
             use: [
               require.resolve('style-loader'),
               {
@@ -189,6 +189,9 @@ const webpackDevConfig = {
                   ],
                 },
               },
+              {
+                loader: require.resolve('less-loader') // compiles Less to CSS
+              }
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -206,6 +209,15 @@ const webpackDevConfig = {
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
+          },
+          {
+            test: /\.(html)$/,
+            use: {
+              loader: require.resolve('html-loader'),
+              options: {
+                
+              }
+            }
           },
         ],
       },

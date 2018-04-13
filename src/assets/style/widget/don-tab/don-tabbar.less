@@ -1,0 +1,57 @@
+
+@import "../../base/fn";
+
+.don-tabbar {
+    display: flex;
+    position: absolute;
+    z-index: 500;
+    bottom: 0;
+    width: 100%;
+    background-color: #F7F7FA;
+
+    &:before {
+        .setTopLine(#C0BFC4);
+    }
+}
+
+.don-tabbar__item {
+    display: block;
+    flex: 1;
+    padding: 5px 0 0;
+    font-size: 0;
+    color: @donTextColorGray;
+    text-align: center;
+    .setTapColor();
+
+    &.don-bar__item_on {
+        .don-tabbar__icon,
+        .don-tabbar__icon > i,
+        .don-tabbar__label {
+            color: #09BB07;
+        }
+    }
+}
+
+.don-tabbar__icon {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+
+    i&,
+    > i {
+        font-size: 24px;
+        color: @donTextColorGray;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.don-tabbar__label {
+    text-align: center;
+    color: @donTextColorGray;
+    font-size: 10px;
+    line-height: 1.8;
+}

@@ -1,0 +1,25 @@
+
+@import "../../base/fn";
+
+.don-progress {
+    display: flex;
+    align-items: center;
+}
+
+.don-progress__bar {
+    background-color: @donProgressBg;
+    height: @donProgressHeight;
+    flex: 1;
+}
+
+.don-progress__inner-bar {
+    width: 0;
+    height: 100%;
+    background-color: @donProgressColor;
+}
+
+.don-progress__opr {
+    display: block;
+    margin-left: 15px;
+    font-size: 0;
+}
