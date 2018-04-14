@@ -12,7 +12,8 @@ import {
   } from 'react-router-dom';
 
   const routes = [
-    {path:'/',component:Pages.Home, exact:true}
+    {path:'/',component:Pages.Login, exact:true},
+    {path:'/home',component:Pages.Home}
   ];
 
   const App = (props,context)=>(

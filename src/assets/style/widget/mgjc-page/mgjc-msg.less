@@ -1,0 +1,46 @@
+
+@import "../../base/fn";
+@import "../mgjc-button/mgjc-button";
+
+.mgjc-msg {
+    padding-top: @mgjcMsgPaddingTop;
+    text-align: center;
+}
+.mgjc-msg__icon-area {
+    margin-bottom: @mgjcMsgIconGap;
+}
+.mgjc-msg__text-area {
+    margin-bottom: @mgjcMsgTextGap;
+    padding:0 20px;
+}
+.mgjc-msg__text-area a{
+    color:@mgjcLinkColorDefault;
+}
+.mgjc-msg__title {
+    margin-bottom: @mgjcMsgTitleGap;
+    font-weight: 400;
+    font-size: 20px;
+}
+.mgjc-msg__desc {
+    font-size: 14px;
+    color: @mgjcTextColorGray;
+}
+.mgjc-msg__opr-area {
+    margin-bottom: @mgjcMsgOprGap;
+}
+.mgjc-msg__extra-area {
+    margin-bottom: @mgjcMsgExtraAreaGap;
+    font-size: 14px;
+    color: @mgjcTextColorGray;
+    a{color: @mgjcLinkColorDefault;}
+}
+
+@media screen and (min-height: @mgjcMsgExtraAreaOfMinHeight) {
+    .mgjc-msg__extra-area {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+}

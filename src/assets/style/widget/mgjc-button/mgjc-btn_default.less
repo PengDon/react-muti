@@ -1,0 +1,14 @@
+
+@import "../../base/fn";
+
+.mgjc-btn_default {
+    color: @mgjcBtnDefaultFontColor;
+    background-color: @mgjcBtnDefaultBg;
+    &:not(.mgjc-btn_disabled):visited {
+        color: @mgjcBtnDefaultFontColor;
+    }
+    &:not(.mgjc-btn_disabled):active {
+        color: @mgjcBtnDefaultActiveFontColor;
+        background-color: @mgjcBtnDefaultActiveBg;
+    }
+}

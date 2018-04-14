@@ -1,0 +1,100 @@
+
+@import "../../base/fn";
+
+.mgjc-uploader{}
+.mgjc-uploader__hd{
+    display: flex;
+    padding-bottom: @mgjcCellGapV;
+    align-items: center;
+}
+.mgjc-uploader__title{
+    flex: 1;
+}
+.mgjc-uploader__info{
+    color: @mgjcTextColorTips;
+}
+
+.mgjc-uploader__bd{
+    margin-bottom: @mgjcCellGapH - (@mgjcCellGapV + @mgjcUploaderFileSpacing);
+    margin-right: -@mgjcUploaderFileSpacing;
+    overflow: hidden;
+}
+.mgjc-uploader__files{
+    list-style: none;
+}
+.mgjc-uploader__file{
+    float: left;
+    margin-right: @mgjcUploaderFileSpacing;
+    margin-bottom: @mgjcUploaderFileSpacing;
+    width: @mgjcUploaderSize;
+    height: @mgjcUploaderSize;
+    background: no-repeat center center;
+    background-size: cover;
+}
+.mgjc-uploader__file_status{
+    position: relative;
+    &:before{
+        content: " ";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, .5);
+    }
+    .mgjc-uploader__file-content{
+        display: block;
+    }
+}
+.mgjc-uploader__file-content{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    .mgjc-icon-warn{
+        display: inline-block;
+    }
+}
+.mgjc-uploader__input-box{
+    float:left;
+    position: relative;
+    margin-right: @mgjcUploaderFileSpacing;
+    margin-bottom: @mgjcUploaderFileSpacing;
+    width: @mgjcUploaderSize - @mgjcUploaderBorderWidth * 2;
+    height: @mgjcUploaderSize - @mgjcUploaderBorderWidth * 2;
+    border: @mgjcUploaderBorderWidth solid @mgjcUploaderBorderColor;
+    &:before, &:after{
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: @mgjcUploaderBorderColor;
+    }
+    &:before{
+        width: @mgjcUploaderBorderWidth + 1;
+        height: @mgjcUploaderSize / 2;
+    }
+    &:after{
+        width: @mgjcUploaderSize / 2;
+        height: @mgjcUploaderBorderWidth + 1;
+    }
+    &:active{
+        border-color: @mgjcUploaderActiveBorderColor;
+        &:before, &:after{
+            background-color: @mgjcUploaderActiveBorderColor;
+        }
+    }
+}
+.mgjc-uploader__input{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    .setTapColor();
+}

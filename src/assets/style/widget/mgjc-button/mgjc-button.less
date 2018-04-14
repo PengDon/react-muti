@@ -1,0 +1,62 @@
+
+@import "../../base/fn";
+@import "mgjc-btn_global";
+@import "mgjc-btn_default";
+@import "mgjc-btn_primary";
+@import "mgjc-btn_warn";
+@import "mgjc-btn_disabled";
+@import "mgjc-btn_loading";
+@import "mgjc-btn_plain";
+
+button, input {
+    &.mgjc-btn {
+        width: 100%;
+        border-width: 0;
+        outline: 0;
+        -webkit-appearance: none;
+        &:focus {
+            outline: 0;
+        }
+    }
+    &.mgjc-btn_inline,&.mgjc-btn_mini {
+        width: auto;
+    }
+    &.mgjc-btn_plain-primary,&.mgjc-btn_plain-default{
+        border-width: 1px;
+        background-color: transparent;
+    }
+}
+
+.mgjc-btn_mini {
+    display: inline-block;
+    padding: 0 1.32em;
+    line-height: @mgjcBtnMiniHeight;
+    font-size: @mgjcBtnMiniFontSize;
+}
+
+
+/*gap between btn*/
+.mgjc-btn + .mgjc-btn {
+    margin-top: @mgjcBtnDefaultGap;
+}
+
+.mgjc-btn.mgjc-btn_inline + .mgjc-btn.mgjc-btn_inline {
+    margin-top: auto;
+    margin-left: @mgjcBtnDefaultGap;
+}
+
+.mgjc-btn-area {
+    margin: @mgjcCellsMarginTop @mgjcBtnDefaultGap .3em; 
+}
+.mgjc-btn-area_inline {
+    display: flex;
+    .mgjc-btn {
+        margin-top: auto;
+        margin-right: @mgjcBtnDefaultGap;
+        width: 100%;
+        flex: 1;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

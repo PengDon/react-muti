@@ -1,0 +1,91 @@
+
+@import "../../../base/fn";
+
+.mgjc-form-preview{
+    position: relative;
+    background-color: #FFFFFF;
+    &:before{
+        .setTopLine(@mgjcCellBorderColor);
+    }
+    &:after{
+        .setBottomLine(@mgjcCellBorderColor);
+    }
+}
+.mgjc-form-preview__hd{
+    position: relative;
+    padding: @mgjcCellGapV @mgjcCellGapH;
+    text-align: right;
+    line-height: 2.5em;
+    &:after{
+        .setBottomLine(@mgjcCellBorderColor);
+        left: @mgjcCellGapH;
+    }
+    .mgjc-form-preview__value{
+        font-style: normal;
+        font-size: 1.6em;
+    }
+}
+.mgjc-form-preview__bd{
+    padding: @mgjcCellGapV @mgjcCellGapH;
+    font-size: .9em;
+    text-align: right;
+    color: @mgjcTextColorGray;
+    line-height: 2;
+}
+.mgjc-form-preview__ft{
+    position: relative;
+    line-height: 50px;
+    display: flex;
+    &:before {
+        .setTopLine(@mgjcDialogLineColor);
+    }
+}
+.mgjc-form-preview__item{
+    overflow: hidden;
+}
+.mgjc-form-preview__label{
+    float: left;
+    margin-right: 1em;
+    min-width: 4em;
+    color: @mgjcTextColorGray;
+    text-align: justify;
+    text-align-last: justify;
+}
+.mgjc-form-preview__value{
+    display: block;
+    overflow: hidden;
+    word-break:normal;
+    word-wrap: break-word;
+}
+.mgjc-form-preview__btn {
+    position: relative;
+    display: block;
+    flex: 1;
+    color: @mgjcDialogLinkColor;
+    text-align: center;
+    .setTapColor();
+    button&{
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        line-height: inherit;
+        font-size: inherit;
+    }
+    &:active {
+        background-color: @mgjcDialogLinkActiveBc;
+    }
+    &:after {
+        .setLeftLine(@mgjcDialogLineColor);
+    }
+    &:first-child {
+        &:after {
+            display: none;
+        }
+    }
+}
+.mgjc-form-preview__btn_default {
+    color: @mgjcTextColorGray;
+}
+.mgjc-form-preview__btn_primary {
+    color: #0BB20C;
+}

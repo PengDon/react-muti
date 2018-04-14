@@ -1,48 +1,135 @@
-import $ from '../util/util';
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+
+import TabBody from './tab_body';
+import TabBodyItem from './tab_body_item';
+import NavBar from './navbar';
+import NavBarItem from './navbar_item';
+import TabBar from './tabbar';
+import TabBarItem from './tabbar_item';
+import TabBarIcon from './tabbar_icon';
+import TabBarLabel from './tabbar_label';
 
 /**
- * tab tab导航栏
- * @param {string} selector tab的selector
- * @param {object=} options 配置项
- * @param {number=} [options.defaultIndex=0] 初始展示的index
- * @param {function=} options.onChange 点击tab时，返回对应的index
+ *  mgjc Tab component, can be auto mount items or mannually display items
  *
- * @example
- * don.tab('#tab',{
- *     defaultIndex: 0,
- *     onChange: function(index){
- *         console.log(index);
- *     }
- * });
  */
-function tab(selector, options = {}) {
-    const $eles = $(selector);
-    options = $.extend({
-        defaultIndex: 0,
-        onChange: $.noop
-    }, options);
+export default class Tab extends React.Component {
+    static propTypes = {
+        /**
+         * layout of the tab, auto mount components when set to `navbar` or `tabbar`
+         *
+         */
+        type: PropTypes.string,
+        /**
+         * default select index
+         *
+         */
+        defaultIndex: PropTypes.number,
+        onChange: PropTypes.func
+    };
 
-    $eles.forEach((ele) => {
-        const $tab = $(ele);
-        const $tabItems = $tab.find('.don-navbar__item, .don-tabbar__item');
-        const $tabContents = $tab.find('.don-tab__content');
+    static defaultProps = {
+      type: 'normal',
+      defaultIndex: 0
+    };
 
-        $tabItems.eq(options.defaultIndex).addClass('don-bar__item_on');
-        $tabContents.eq(options.defaultIndex).show();
+    state={
+        index: this.props.defaultIndex
+    };
 
-        $tabItems.on('click', function () {
-            const $this = $(this), index = $this.index();
+    handleHeaderClick(idx) {
+        this.setState({index: idx});
+        if (this.props.onChange) this.props.onChange(idx);
+    }
 
-            $tabItems.removeClass('don-bar__item_on');
-            $this.addClass('don-bar__item_on');
+    parseChild(childrenInput) {
+        const ChildHeaders = [];
+        const ChildContents = [];
 
-            $tabContents.hide();
-            $tabContents.eq(index).show();
-
-            options.onChange.call(this, index);
+        React.Children.map(childrenInput, child => {
+            if (!child) return;
+            const {children, type, ...others} = child.props;
+            if (child.type === TabBarItem || child.type === NavBarItem){
+              ChildHeaders.push(child);
+              if (children) ChildContents.push(<TabBodyItem children={children}/>);
+            }
+            else if (child.type === TabBodyItem){
+              ChildContents.push(child);
+            }
         });
-    });
 
-    return this;
+        return {ChildHeaders, ChildContents};
+    }
+
+    renderBar(type, children, cls) {
+        const {ChildHeaders, ChildContents} = this.parseChild(children);
+
+        let _headers = ChildHeaders.map((item, idx)=>{
+            return React.cloneElement(item, {
+                key: idx,
+                active: this.state.index === idx,
+                onClick: this.handleHeaderClick.bind(this, idx, item)
+            });
+        });
+
+        let _contents = ChildContents.map((item, idx)=>{
+            return React.cloneElement(item, {
+                key: idx,
+                active: this.state.index === idx,
+                tabIndex: idx
+            });
+        });
+
+        if (type === 'tabbar'){
+            return (
+                <div className={cls}>
+                    <TabBody>
+                        {_contents}
+                    </TabBody>
+                    <TabBar>
+                        {_headers}
+                    </TabBar>
+                </div>
+            );
+        }
+        else if (type === 'navbar'){
+            return (
+                <div className={cls}>
+                    <NavBar>
+                        {_headers}
+                    </NavBar>
+                    <TabBody>
+                        {_contents}
+                    </TabBody>
+                </div>
+            );
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    render() {
+        const {children, className, type, ...others} = this.props;
+        const divProps = Object.assign({}, others);
+        delete divProps.defaultIndex;
+
+        const cls = classNames({
+            'mgjc-tab': true
+        }, className);
+
+        if (type === 'normal') {
+            return (
+                <div className={cls} {...divProps}>
+                    {children}
+                </div>
+            );
+        }
+        else {
+            return this.renderBar(type, children, cls);
+        }
+    }
 }
-export default tab;

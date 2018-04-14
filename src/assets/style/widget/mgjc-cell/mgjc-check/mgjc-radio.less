@@ -1,0 +1,24 @@
+
+@import "../../../base/fn";
+
+// method2 accessbility
+.mgjc-cells_radio{
+    .mgjc-cell__ft {
+        padding-left: @mgjcCellInnerGapH;
+    }
+}
+.mgjc-check {
+    // radio
+    .mgjc-cells_radio & {
+        &:checked {
+            & + .mgjc-icon-checked {
+                &:before {
+                    display: block;
+                    content: '\EA08';
+                    color: #09BB07;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}

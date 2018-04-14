@@ -1,0 +1,32 @@
+
+@import "../../base/fn";
+
+.mgjc-cell_swiped {
+    display: block;
+    padding: 0;
+    > .mgjc-cell__bd {
+        position: relative;
+        z-index: 1;
+        background-color: #FFFFFF;
+    }
+    > .mgjc-cell__ft {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        color: #FFFFFF;
+    }
+}
+.mgjc-swiped-btn {
+    display: block;
+    padding: @mgjcCellGapV 1em;
+    line-height: @mgjcCellLineHeight;
+    color: inherit;
+}
+.mgjc-swiped-btn_default {
+    background-color: #C7C7CC;
+}
+.mgjc-swiped-btn_warn {
+    background-color: #FF3B30;
+}

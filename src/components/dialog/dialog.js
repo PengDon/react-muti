@@ -1,93 +1,92 @@
-import $ from '../util/util';
-import tpl from './dialog.html';
-
-let _sington;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+import Mask from '../mask/index';
 
 /**
- * dialog，弹窗，alert和confirm的父类
+ * Modals provide feedback to user
  *
- * @param {object=} options 配置项
- * @param {string=} options.title 弹窗的标题
- * @param {string=} options.content 弹窗的内容
- * @param {string=} options.className 弹窗的自定义类名
- * @param {array=} options.buttons 按钮配置项
- *
- * @param {string} [options.buttons[].label=确定] 按钮的文字
- * @param {string} [options.buttons[].type=primary] 按钮的类型 [primary, default]
- * @param {function} [options.buttons[].onClick=$.noop] 按钮的回调
- *
- * @example
- * don.dialog({
- *     title: 'dialog标题',
- *     content: 'dialog内容',
- *     className: 'custom-classname',
- *     buttons: [{
- *         label: '取消',
- *         type: 'default',
- *         onClick: function () { alert('取消') }
- *     }, {
- *         label: '确定',
- *         type: 'primary',
- *         onClick: function () { alert('确定') }
- *     }]
- * });
- * 
- * // 主动关闭
- * var $dialog = don.dialog({...});
- * $dialog.hide(function(){
- *      console.log('`dialog` has been hidden');
- * });
  */
-function dialog(options = {}) {
-    if(_sington) return _sington;
+class Dialog extends Component {
+    static propTypes = {
+        /**
+         * Object Arrays of buttons, `label` property is require
+         *
+         */
+        buttons: PropTypes.array,
+        /**
+         * to display the dialog
+         *
+         */
+        show: PropTypes.bool,
+        /**
+         * Title of dialog
+         *
+         */
+        title: PropTypes.string,
+        /**
+         * Specify display style: ios/android, default is ios when autoDetect not on
+         *
+         */
+        type: PropTypes.string,
+    };
 
-    const isAndroid = $.os.android;
-    options = $.extend({
-        title: null,
-        content: '',
-        className: '',
-        buttons: [{
-            label: '确定',
-            type: 'primary',
-            onClick: $.noop
-        }],
-        isAndroid: isAndroid
-    }, options);
+    static defaultProps = {
+        buttons: [],
+        show: false,
+        title: '',
+        type: '',
+    };
 
-    const $dialogWrap = $($.render(tpl, options));
-    const $dialog = $dialogWrap.find('.don-dialog');
-    const $mask = $dialogWrap.find('.don-mask');
+    constructor(props){
+        super(props);
 
-    function _hide(callback){
-        _hide = $.noop; // 防止二次调用导致报错
-
-        $mask.addClass('don-animate-fade-out');
-        $dialog
-            .addClass('don-animate-fade-out')
-            .on('animationend webkitAnimationEnd', function () {
-                $dialogWrap.remove();
-                _sington = false;
-                callback && callback();
-            });
+        this.state = {
+            isAndroid: ''
+        };
     }
-    function hide(callback){ _hide(callback); }
 
-    $('body').append($dialogWrap);
-    // 不能直接把.don-animate-fade-in加到$dialog，会导致mask的z-index有问题
-    $mask.addClass('don-animate-fade-in');
-    $dialog.addClass('don-animate-fade-in');
+    renderButtons() {
+        return this.props.buttons.map((action, idx) => {
+            const {type, label, ...others} = action;
+            const className = classNames({
+                'mgjc-dialog__btn': true,
+                'mgjc-dialog__btn_default': type === 'default',
+                'mgjc-dialog__btn_primary': type === 'primary'
+            });
 
-    $dialogWrap.on('click', '.don-dialog__btn', function (evt) {
-        const index = $(this).index();
-        if (options.buttons[index].onClick) {
-            if (options.buttons[index].onClick.call(this, evt) !== false) hide();
-        } else {
-            hide();
-        }
-    });
+            return (
+                <a key={idx} href="javascript:;" {...others} className={className}>{label}</a>
+            );
+        });
+    }
 
-    _sington = $dialogWrap[0];
-    _sington.hide = hide;
-    return _sington;
+    render() {
+        const {title, show, className, children, buttons, type, autoDectect, ...others} = this.props;
+        const styleType = type ? type : 'ios';
+        const cls = classNames('mgjc-dialog', {
+            'mgjc-skin_android': styleType === 'android',
+            [className]: className
+        });
+
+        return (
+            <div style={{display: show ? 'block' : 'none'}}>
+                <Mask/>
+                <div className={cls} {...others}>
+                    { title ?
+                    <div className="mgjc-dialog__hd">
+                        <strong className="mgjc-dialog__title">{title}</strong>
+                    </div> : false }
+                    <div className="mgjc-dialog__bd">
+                        {children}
+                    </div>
+                    <div className="mgjc-dialog__ft">
+                        {this.renderButtons()}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
-export default dialog;
+
+export default Dialog;

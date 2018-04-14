@@ -1,0 +1,77 @@
+
+@import "../../base/fn";
+
+/*
+z-index:
+0: .mgjc-swiped-btn
+1: .mgjc-cell_swiped .mgjc-cell__bd
+2: .mgjc-cells和.mgjc-cell的1px线
+*/
+
+.mgjc-cells {
+    margin-top: @mgjcCellsMarginTop;
+    background-color: @mgjcCellBg;
+    line-height: @mgjcCellLineHeight;
+    font-size: @mgjcCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+
+    overflow: hidden; //因为每个cell的border使用before元素left搞的，ie下伪元素的containing block估计跟标准不同，在cell上用oh不生效
+
+    // onepx
+    position: relative;
+    &:before {
+        .setTopLine(@mgjcCellBorderColor);
+        z-index: 2;
+    }
+    &:after {
+        .setBottomLine(@mgjcCellBorderColor);
+        z-index: 2;
+    }
+}
+
+.mgjc-cells__title {
+    margin-top: .77em; // 15px - 行高
+    margin-bottom: .3em; // 8px - 行高
+    padding-left: @mgjcCellGapH;
+    padding-right: @mgjcCellGapH;
+    color: @mgjcTextColorGray;
+    font-size: @mgjcCellTipsFontSize;
+
+    & + .mgjc-cells {
+        margin-top: 0;
+    }
+}
+
+.mgjc-cells__tips {
+    margin-top: .3em; // 8px - 行高
+    color: @mgjcTextColorGray;
+    padding-left: @mgjcCellGapH;
+    padding-right: @mgjcCellGapH;
+    font-size: @mgjcCellTipsFontSize;
+}
+
+.mgjc-cell {
+    padding: @mgjcCellGapV @mgjcCellGapH;
+    position: relative; //这个是为了兼容cells容器onepx方案被before挡住而做的
+    display: flex;
+    align-items: center;
+    &:before {
+        .setTopLine(@mgjcCellBorderColor);
+        left: @mgjcCellGapH;
+        z-index: 2;
+    }
+    &:first-child {
+        &:before {
+            display: none;
+        }
+    }
+}
+.mgjc-cell_primary{
+    align-items: flex-start;
+}
+.mgjc-cell__bd{
+    flex: 1;
+}
+.mgjc-cell__ft {
+    text-align: right;
+    color: @mgjcTextColorGray;
+}

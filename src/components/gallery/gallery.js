@@ -1,61 +1,123 @@
-import $ from '../util/util';
-import tpl from './gallery.html';
-
-let _sington;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+import Swiper from '../swiper';
 
 /**
- * gallery 带删除按钮的图片预览，主要是配合图片上传使用
- * @param {string} url gallery显示的图片的url
- * @param {object=} options 配置项
- * @param {string=} options.className 自定义类名
- * @param {function=} options.onDelete 点击删除图片时的回调
+ * Full screen photo display
  *
- * @example
- * var gallery = don.gallery(url, {
- *     className: 'custom-classname',
- *     onDelete: function(){
- *         if(confirm('确定删除该图片？')){ console.log('删除'); }
- *         gallery.hide(function() {
- *              console.log('`gallery` has been hidden');
- *          });
- *     }
- * });
  */
-function gallery(url, options = {}) {
-    if(_sington) return _sington;
+class Gallery extends Component {
+    static propTypes = {
+        /**
+         * indicate whather the component is display
+         *
+         */
+        show: PropTypes.bool,
+        /**
+         * image source, string for single element, array for multiple element
+         *
+         */
+        src: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array
+        ]),
+        /**
+         * indicate whather the component is display
+         *
+         */
+        defaultIndex: PropTypes.number,
+    };
 
-    options = $.extend({
-        className: '',
-        onDelete: $.noop
-    }, options);
-
-    const $gallery = $($.render(tpl, $.extend({
-        url: url
-    }, options)));
-
-    function _hide(callback){
-        _hide = $.noop; // 防止二次调用导致报错
-
-        $gallery
-            .addClass('don-animate-fade-out')
-            .on('animationend webkitAnimationEnd', function () {
-                $gallery.remove();
-                _sington = false;
-                callback && callback();
-            });
+    static defaultProps = {
+        show: undefined,
+        src: '',
+        defaultIndex: 0
     }
-    function hide(callback){ _hide(callback); }
 
-    $('body').append($gallery);
-    $gallery.find('.don-gallery__img').on('click', function () { hide(); });
-    $gallery.find('.don-gallery__del').on('click', function () {
-        options.onDelete.call(this, url);
-    });
+    constructor(props){
+        super(props);
 
-    $gallery.show().addClass('don-animate-fade-in');
+        this.state = {
+            currentIndex: this.props.defaultIndex
+        };
+    }
 
-    _sington = $gallery[0];
-    _sington.hide = hide;
-    return _sington;
+    handleClick(func){
+        return (e)=>{
+            if (func) func(e, this.state.currentIndex);
+        };
+    }
+
+    renderImages(imgs){
+        return (
+            <div className="mgjc-gallery__img">
+                <Swiper
+                    indicators={false}
+                    defaultIndex={this.props.defaultIndex}
+                    onChange={ (prev, next) => this.setState({currentIndex: next}) }
+                >
+                    {
+                        imgs.map( (img, i) => {
+                            const imgStyle = {
+                                backgroundImage: `url(${img})`,
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center center'
+                            };
+                            return (
+                                <span key={i} style={imgStyle}></span>
+                            );
+                        })
+                    }
+                </Swiper>
+            </div>
+        );
+    }
+
+    renderOprs(){
+        if (Array.isArray(this.props.children)){
+            return this.props.children.map( (child, i) => {
+                return React.cloneElement(child, {
+                    key: i,
+                    onClick: this.handleClick(child.props.onClick)
+                });
+            });
+        } else {
+            if (this.props.children){
+                return React.cloneElement(this.props.children, {
+                    onClick: this.handleClick(this.props.children.props.onClick)
+                });
+            } else {
+                return false;
+            }
+        }
+    }
+
+    render(){
+        const { children, className, show, src, defaultIndex, ...others } = this.props;
+        const cls = classNames({
+            'mgjc-gallery': true,
+            [className]: className
+        });
+
+        if (!show) return false;
+
+        return (
+            <div className={cls} style={{display: show ? 'block' : 'none'}} {...others}>
+                {
+                    Array.isArray(src) ? this.renderImages(src)
+                    : <span className="mgjc-gallery__img" style={{backgroundImage: `url(${src})`}}></span>
+                }
+
+                <div className="mgjc-gallery__opr">
+                    {
+                        this.renderOprs()
+                    }
+                </div>
+            </div>
+        );
+    }
 }
-export default gallery;
+
+export default Gallery;

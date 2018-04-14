@@ -1,0 +1,31 @@
+
+@import "../../../base/fn";
+
+.mgjc-cells_checkbox {
+    .mgjc-cell__hd {
+        padding-right: @mgjcCellInnerGapH;
+    }
+    .mgjc-icon-checked {
+        &:before {
+            content: '\EA01';
+            color: #C9C9C9;
+            font-size: 23px;
+            display: block;
+        }
+    }
+}
+
+// method2 accessbility
+.mgjc-check {
+    // checkbox
+    .mgjc-cells_checkbox & {
+        &:checked {
+            & + .mgjc-icon-checked {
+                &:before {
+                    content: '\EA06';
+                    color: #09BB07;
+                }
+            }
+        }
+    }
+}

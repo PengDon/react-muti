@@ -1,0 +1,76 @@
+
+@import "../../../base/fn";
+
+.mgjc-label{
+  display:block;
+  width:@mgjcCellLabelWidth;
+  .text_wrap();
+}
+.mgjc-input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    -webkit-appearance: none;
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;
+    height: unit(@mgjcCellLineHeight, em);
+    line-height: @mgjcCellLineHeight;
+
+    // hides the spin-button
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button{
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+.mgjc-textarea {
+    display: block;
+    border: 0;
+    resize: none;
+    width: 100%;
+    color: inherit;
+    font-size: 1em;
+    line-height: inherit;
+    outline: 0;
+}
+
+.mgjc-textarea-counter{
+    color: @mgjcTextColorTips;
+    text-align: right;
+    .mgjc-cell_warn &{
+        color: @mgjcTextColorWarn;
+    }
+}
+
+.mgjc-toptips {
+    display:none;
+    position: fixed;
+    transform: translateZ(0);
+    top: 0;
+    left: 0;
+    right: 0;
+    padding:5px;
+    font-size:14px;
+    text-align: center;
+    color: #FFF;
+    z-index: 5000;
+    .text_wrap();
+}
+.mgjc-toptips_warn {
+    background-color: @mgjcColorWarn;
+}
+.mgjc-cells_form {
+    .mgjc-cell__ft{
+        font-size:0;
+    }
+    .mgjc-icon-warn{
+        display:none;
+    }
+    input, textarea, label[for]{
+        .setTapColor();
+    }
+}
+.mgjc-cell_warn{
+    color:@mgjcTextColorWarn;
+    .mgjc-icon-warn{display:inline-block;}
+}

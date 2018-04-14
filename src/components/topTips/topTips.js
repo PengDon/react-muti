@@ -1,75 +1,42 @@
-import $ from '../util/util';
-import tpl from './topTips.html';
-
-let _toptips = null;
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+import './toptips.less';
 
 /**
- * toptips 顶部报错提示
- * @param {string} content 报错的文字
- * @param {number|function|object=} options 多少毫秒后消失|消失后的回调|配置项
- * @param {number=} [options.duration=3000] 多少毫秒后消失
- * @param {string=} options.className 自定义类名
- * @param {function=} options.callback 消失后的回调
+ *  Drop down message from top
  *
- * @example
- * don.topTips('请填写正确的字段');
- * don.topTips('请填写正确的字段', 3000);
- * don.topTips('请填写正确的字段', function(){ console.log('close') });
- * don.topTips('请填写正确的字段', {
- *     duration: 3000,
- *     className: 'custom-classname',
- *     callback: function(){ console.log('close') }
- * });
- * 
- * // 主动关闭
- * var $topTips = don.topTips('请填写正确的字段');
- * $topTips.hide(function() {
- *      console.log('`topTips` has been hidden');
- * });
  */
-function topTips(content, options = {}) {
-    if (typeof options === 'number') {
-        options = {
-            duration: options
-        };
-    }
+const Toptips = (props) => {
+    const {className, type, children, show, ...others} = props;
+    const cls = classNames({
+        'mgjc-toptips': true,
+        [`mgjc-toptips_${type}`]: true,
+        [className]: className
+    });
 
-    if (typeof options === 'function') {
-        options = {
-            callback: options
-        };
-    }
+    return (
+        <div className={cls} {...others} style={{display: show ? 'block' : 'none'}}>
+            {children}
+        </div>
+    );
+};
 
-    options = $.extend({
-        content: content,
-        duration: 3000,
-        callback: $.noop,
-        className: ''
-    }, options);
+Toptips.propTypes = {
+    /**
+     * display tips
+     *
+     */
+    show: PropTypes.bool,
+    /**
+     * type: `default`, `warn`, `info`, `primary`
+     */
+    type: PropTypes.string
+};
 
-    const $topTips = $($.render(tpl, options));
-    function _hide(callback){
-        _hide = $.noop; // 防止二次调用导致报错
+Toptips.defaultProps = {
+    show: false,
+    type: 'default'
+};
 
-        $topTips.remove();
-        callback && callback();
-        options.callback();
-        _toptips = null;
-    }
-    function hide(callback){ _hide(callback); }
-
-    $('body').append($topTips);
-    if(_toptips){
-        clearTimeout(_toptips.timeout);
-        _toptips.hide();
-    }
-
-    _toptips = {
-        hide: hide
-    };
-    _toptips.timeout = setTimeout(hide, options.duration);
-
-    $topTips[0].hide = hide;
-    return $topTips[0];
-}
-export default topTips;
+export default Toptips;

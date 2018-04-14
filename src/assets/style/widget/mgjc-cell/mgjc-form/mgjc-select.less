@@ -1,0 +1,70 @@
+
+@import "../../../base/fn";
+
+.mgjc-cell_select {
+    padding: 0;
+    .mgjc-select {
+        padding-right: 30px;
+    }
+    .mgjc-cell__bd{
+        &:after{
+            content: " ";
+            .setArrow(right, 6px, #C8C8CD, 2px);
+
+            position: absolute;
+            top: 50%;
+            right: @mgjcCellGapH;
+            margin-top: -4px;
+        }
+    }
+}
+
+.mgjc-select {
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    width: 100%;
+    font-size: inherit;
+    height: @mgjcCellHeight;
+    line-height: @mgjcCellHeight;
+    position: relative;
+    z-index: 1;
+    padding-left: @mgjcCellGapH;
+}
+
+.mgjc-cell_select-before {
+    padding-right:@mgjcCellGapH;
+    .mgjc-select{
+        width:@mgjcCellLabelWidth;
+        box-sizing: border-box;
+    }
+    .mgjc-cell__hd {
+        position:relative;
+        &:after {
+            .setRightLine(@mgjcCellBorderColor);
+        }
+        &:before{
+            content: " ";
+            .setArrow(right, 6px, #C8C8CD, 2px);
+
+            position: absolute;
+            top: 50%;
+            right: @mgjcCellGapH;
+            margin-top: -4px;
+        }
+    }
+    .mgjc-cell__bd {
+        padding-left:@mgjcCellGapH;
+        &:after{
+            display:none;
+        }
+    }
+}
+
+.mgjc-cell_select-after {
+    padding-left:@mgjcCellGapH;
+    .mgjc-select {
+        padding-left:0;
+    }
+}

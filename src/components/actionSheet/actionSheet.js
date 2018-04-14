@@ -1,100 +1,111 @@
-import $ from '../util/util';
-import tpl from './actionSheet.html';
-
-let _sington;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+import Mask from '../mask/index';
+import './actionsheet.less';
 
 /**
- * actionsheet 弹出式菜单
- * @param {array} menus 上层的选项
- * @param {string} menus[].label 选项的文字
- * @param {function} menus[].onClick 选项点击时的回调
- *
- * @param {array} actions 下层的选项
- * @param {string} actions[].label 选项的文字
- * @param {function} actions[].onClick 选项点击时的回调
- *
- * @param {object=} options 配置项
- * @param {string=} options.className 自定义类名
- *
- * @example
- * don.actionSheet([
- *     {
- *         label: '拍照',
- *         onClick: function () {
- *             console.log('拍照');
- *         }
- *     }, {
- *         label: '从相册选择',
- *         onClick: function () {
- *             console.log('从相册选择');
- *         }
- *     }, {
- *         label: '其他',
- *         onClick: function () {
- *             console.log('其他');
- *         }
- *     }
- * ], [
- *     {
- *         label: '取消',
- *         onClick: function () {
- *             console.log('取消');
- *         }
- *     }
- * ], {
- *     className: 'custom-classname'
- * });
+ * Used to display a collection of actions that contain a set of interactivity, including descriptions, links, and so on. Popup from the bottom, generally used to respond to user clicks on the page.
  */
-function actionSheet(menus = [], actions = [], options = {}) {
-    if(_sington) return _sington;
+class ActionSheet extends Component {
+    static propTypes = {
+        /**
+         * Array of Objects for menus, `label` property is Required
+         *
+         */
+        menus: PropTypes.array,
+        /**
+         * Array of Objects for actions, `label` property is Required
+         *
+         */
+        actions: PropTypes.array,
+        /**
+         * To display ActionSheet
+         *
+         */
+        show: PropTypes.bool,
+        /**
+         * Function triggers when user click on the mask
+         *
+         */
+        onRequestClose: PropTypes.func,
+        /**
+         * style: ios/android
+         */
+        type: PropTypes.string,
+    };
 
-    const isAndroid = $.os.android;
-    options = $.extend({
-        menus: menus,
-        actions: actions,
-        className: '',
-        isAndroid: isAndroid
-    }, options);
-    const $actionSheetWrap = $($.render(tpl, options));
-    const $actionSheet = $actionSheetWrap.find('.don-actionsheet');
-    const $actionSheetMask = $actionSheetWrap.find('.don-mask');
+    static defaultProps = {
+        type: '',
+        menus: [],
+        actions: [],
+        show: false,
+    };
 
-    function _hide(callback){
-        _hide = $.noop; // 防止二次调用导致报错
+    constructor(props) {
+        super(props);
 
-        $actionSheet.addClass(isAndroid ? 'don-animate-fade-out' : 'don-animate-slide-down');
-        $actionSheetMask
-            .addClass('don-animate-fade-out')
-            .on('animationend webkitAnimationEnd', function () {
-                $actionSheetWrap.remove();
-                _sington = false;
-                callback && callback();
-            });
+
+        this.handleMaskClick = this.handleMaskClick.bind(this);
     }
-    function hide(callback){ _hide(callback); }
 
-    $('body').append($actionSheetWrap);
+    renderMenuItem() {
+        return this.props.menus.map((menu, idx) => {
+            const {label, className, ...others} = menu;
+            const cls = classNames({
+                'mgjc-actionsheet__cell': true,
+                [className]: className
+            });
 
-    // 这里获取一下计算后的样式，强制触发渲染. fix IOS10下闪现的问题
-    $.getStyle($actionSheet[0], 'transform');
+            return (
+                <div key={idx} {...others} className={cls}>{label}</div>
+            );
+        });
+    }
 
-    $actionSheet.addClass(isAndroid ? 'don-animate-fade-in' : 'don-animate-slide-up');
-    $actionSheetMask
-        .addClass('don-animate-fade-in')
-        .on('click', function () { hide(); });
-    $actionSheetWrap.find('.don-actionsheet__menu').on('click', '.don-actionsheet__cell', function (evt) {
-        const index = $(this).index();
-        menus[index].onClick.call(this, evt);
-        hide();
-    });
-    $actionSheetWrap.find('.don-actionsheet__action').on('click', '.don-actionsheet__cell', function (evt) {
-        const index = $(this).index();
-        actions[index].onClick.call(this, evt);
-        hide();
-    });
+    renderActions() {
+        return this.props.actions.map((action, idx) => {
+            const {label, className, ...others} = action;
+            const cls = classNames({
+                'mgjc-actionsheet__cell': true,
+                [className]: className
+            });
 
-    _sington = $actionSheetWrap[0];
-    _sington.hide = hide;
-    return _sington;
-}
-export default actionSheet;
+            return (
+                <div key={idx} {...others} className={cls}>{label}</div>
+            );
+        });
+    }
+
+    handleMaskClick(e){
+        if (this.props.onRequestClose) this.props.onRequestClose(e);
+    }
+
+    render() {
+        const {show, type, onRequestClose, menus, actions, ...others} = this.props;
+        const cls = classNames({
+            'mgjc-actionsheet': true,
+            'mgjc-actionsheet_toggle': show
+        });
+
+        let styleType = type ? type : 'ios';
+
+        return (
+            <div
+                className={styleType === 'android' ? 'mgjc-skin_android' : ''}
+            >
+                    <Mask style={{display: show ? 'block' : 'none'}} onClick={this.handleMaskClick} />
+                    <div className={cls} {...others} >
+                        <div className="mgjc-actionsheet__menu">
+                            {this.renderMenuItem()}
+                        </div>
+                        <div className="mgjc-actionsheet__action">
+                            {this.renderActions()}
+                        </div>
+                    </div>
+            </div>
+        );
+    }
+};
+
+export default ActionSheet;

@@ -1,0 +1,13 @@
+
+@import "../../base/fn";
+
+.mgjc-btn_warn {
+    background-color: @mgjcBtnWarnBg;
+    &:not(.mgjc-btn_disabled):visited {
+        color: @mgjcBtnFontColor;
+    }
+    &:not(.mgjc-btn_disabled):active {
+        color: @mgjcBtnActiveFontColor;
+        background-color: @mgjcBtnWarnActiveBg;
+    }
+}

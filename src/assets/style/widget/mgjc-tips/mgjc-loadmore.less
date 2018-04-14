@@ -1,0 +1,41 @@
+@import "../../base/fn";
+
+.mgjc-loadmore{
+    width: 65%;
+    margin:1.5em auto;
+    line-height: 1.6em;
+    font-size:14px;
+    text-align: center;
+}
+.mgjc-loadmore__tips{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.mgjc-loadmore_line{
+    border-top:1px solid @mgjcLineColorLight;
+    margin-top:2.4em;
+    .mgjc-loadmore__tips{
+        position: relative;
+        top:-.9em;
+        padding:0 .55em;
+        background-color: #FFFFFF;
+        color:@mgjcTextColorGray;
+    }
+}
+.mgjc-loadmore_dot{
+    .mgjc-loadmore__tips{
+        padding:0 .16em;
+        &:before{
+            content: " ";
+            width:4px;
+            height:4px;
+            border-radius:50%;
+            background-color: @mgjcLineColorLight;
+            display: inline-block;
+            position: relative;
+            vertical-align: 0;
+            top:-.16em;
+        }
+    }
+}

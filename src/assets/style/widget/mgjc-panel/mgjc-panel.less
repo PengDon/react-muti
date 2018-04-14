@@ -1,0 +1,35 @@
+
+@import "../../base/fn";
+
+
+.mgjc-panel {
+    background-color: #FFFFFF;
+    margin-top: 10px;
+    &:first-child {
+        margin-top: 0;
+    }
+
+    position: relative;
+    overflow: hidden;
+    &:before {
+        .setTopLine(@mgjcLineColorLight);
+    }
+    &:after {
+        .setBottomLine(@mgjcLineColorLight);
+    }
+}
+
+.mgjc-panel__hd {
+    padding: 14px 15px 10px;
+    color: @mgjcTextColorGray;
+    font-size: 13px;
+    position: relative;
+    &:after {
+        .setBottomLine(@mgjcLineColorLight);
+        left: 15px;
+    }
+}
+
+
+
+

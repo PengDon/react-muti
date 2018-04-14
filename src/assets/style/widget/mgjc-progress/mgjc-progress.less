@@ -1,0 +1,25 @@
+
+@import "../../base/fn";
+
+.mgjc-progress {
+    display: flex;
+    align-items: center;
+}
+
+.mgjc-progress__bar {
+    background-color: @mgjcProgressBg;
+    height: @mgjcProgressHeight;
+    flex: 1;
+}
+
+.mgjc-progress__inner-bar {
+    width: 0;
+    height: 100%;
+    background-color: @mgjcProgressColor;
+}
+
+.mgjc-progress__opr {
+    display: block;
+    margin-left: 15px;
+    font-size: 0;
+}

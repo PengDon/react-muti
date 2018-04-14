@@ -1,0 +1,66 @@
+
+@import "../../base/fn";
+
+.mgjc-cell_switch{
+    padding-top: (@mgjcCellHeight - @mgjcSwitchHeight) / 2;
+    padding-bottom: (@mgjcCellHeight - @mgjcSwitchHeight) / 2;
+}
+.mgjc-switch{
+    appearance: none;
+}
+.mgjc-switch,
+.mgjc-switch-cp__box{
+    position: relative;
+    width: 52px;
+    height: @mgjcSwitchHeight;
+    border: 1px solid #DFDFDF;
+    outline: 0;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-color: #DFDFDF;
+    transition: background-color .1s, border .1s;
+
+    &:before{
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: @mgjcSwitchHeight - 2;
+        border-radius: 15px;
+        background-color: #FDFDFD;
+        transition:transform .35s cubic-bezier(0.45, 1, 0.4, 1);
+    }
+    &:after{
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: @mgjcSwitchHeight - 2;
+        height: @mgjcSwitchHeight - 2;
+        border-radius: 15px;
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        transition:transform .35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+    }
+}
+.mgjc-switch:checked,
+.mgjc-switch-cp__input:checked ~ .mgjc-switch-cp__box{
+    border-color: #04BE02;
+    background-color: #04BE02;
+    &:before {
+        transform: scale(0);
+    }
+    &:after {
+        transform: translateX(20px);
+    }
+}
+
+// 兼容IE Edge的版本
+.mgjc-switch-cp__input{
+    position: absolute;
+    left: -9999px;
+}
+.mgjc-switch-cp__box{
+    display: block;
+}

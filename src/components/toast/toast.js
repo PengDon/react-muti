@@ -1,65 +1,52 @@
-import $ from '../util/util';
-import tpl from './toast.html';
-
-let _sington;
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from '../../utils/classnames';
+import Mask from '../mask/index';
+import Icon from '../icon/index';
 
 /**
- * toast 一般用于操作成功时的提示场景
- * @param {string} content toast的文字
- * @param {Object|function=} options 配置项或回调
- * @param {number=} [options.duration=3000] 多少毫秒后关闭toast
- * @param {function=} options.callback 关闭后的回调
- * @param {string=} options.className 自定义类名
+ *  pop out indicator to inform users
  *
- * @example
- * don.toast('操作成功', 3000);
- * don.toast('操作成功', {
- *     duration: 3000,
- *     className: 'custom-classname',
- *     callback: function(){ console.log('close') }
- * });
  */
-function toast(content = '', options = {}) {
-    if(_sington) return _sington;
+class Toast extends Component {
+    static propTypes = {
+        /**
+         * Icon Value
+         *
+         */
+        icon: PropTypes.string,
+        /**
+         * Icon Size
+         *
+         */
+        iconSize: PropTypes.string,
+        /**
+         * display toast
+         *
+         */
+        show: PropTypes.bool
+    };
 
-    if (typeof options === 'number') {
-        options = {
-            duration: options
-        };
+    static defaultProps = {
+        icon: 'toast',
+        show: false,
+    };
+
+    render() {
+        const {className, icon, show, children, iconSize, ...others} = this.props;
+        const cls = classNames('mgjc-toast', {
+            [className]: className
+        });
+        return (
+            <div style={{display: show ? 'block' : 'none'}}>
+                <Mask transparent={true}/>
+                <div className={cls} {...others}>
+                    <Icon value={icon} size={iconSize} className="mgjc-icon_toast"/>
+                    <p className="mgjc-toast_content">{children}</p>
+                </div>
+            </div>
+        );
     }
-    if (typeof options === 'function') {
-        options = {
-            callback: options
-        };
-    }
-
-    options = $.extend({
-        content: content,
-        duration: 3000,
-        callback: $.noop,
-        className: ''
-    }, options);
-
-    const $toastWrap = $($.render(tpl, options));
-    const $toast = $toastWrap.find('.don-toast');
-    const $mask = $toastWrap.find('.don-mask');
-
-    $('body').append($toastWrap);
-    $toast.addClass('don-animate-fade-in');
-    $mask.addClass('don-animate-fade-in');
-
-    setTimeout(() => {
-        $mask.addClass('don-animate-fade-out');
-        $toast
-            .addClass('don-animate-fade-out')
-            .on('animationend webkitAnimationEnd', function () {
-                $toastWrap.remove();
-                _sington = false;
-                options.callback();
-            });
-    }, options.duration);
-
-    _sington = $toastWrap[0];
-    return $toastWrap[0];
 }
-export default toast;
+
+export default Toast;
