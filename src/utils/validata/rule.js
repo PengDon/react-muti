@@ -6,7 +6,7 @@ const Rule = {
      * @returns Boolean
      */
     required: (value) => {
-        return (value != null) && (value != "");
+        return (value !== null) && (value !== "");
     },
     /**
      * 在最大长度内
@@ -25,7 +25,7 @@ const Rule = {
      * @returns 
      */
     isString: (value) => {
-        return (value != null) && (value != undefined) && (typeof value == 'string') && (value.constructor == String);
+        return (value !== null) && (value !== undefined) && (typeof value === 'string') && (value.constructor === String);
     },
     /**
      * 登录名格式验证 (可以由字母、数字、_等组成，长度在5-16位)
