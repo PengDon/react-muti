@@ -31,6 +31,7 @@ class App extends Component {
             showToptips: false,
             from:{
                 phone:{
+                    rule:'',
                     validata:false,
                     value:'',
                 },
@@ -46,40 +47,26 @@ class App extends Component {
         }
     }
 
+    validataData(){
+
+    }
+
     // 登录 
     login = async () => {
-        // // 空值校验
-        // if (!this.state.loginName || !this.state.loginPwd) {
-        //     alert("用户名或密码不能为空");
-        //     return;
-        // }
-        // // 获取接口结果 
-        // let result = await api.login(this.state);
-        // if (result.success) {
-        //     // 跳转到首页
-        //     window.location.replace("#/");
-        // } else {
-        //     alert(result.msg);
-        //     this.setState({ loginName: '', loginPwd: '' });
-        // }
+       
     }
 
-    handChange(name,args,value){
-        validata(name,args,value)
-    //     this.setState({ showToptips: !this.state.showToptips ,tipMsg:'手机号不能为空'})
-    //     console.log(name);
-    //     console.log(value);
-    //    console.log(args);
-    }
-
-    componentWillMount() {
-        this.state.warnTimer && clearTimeout(this.state.warnTimer);
-        // let user = Cookie.get('login');
-        // if (user.isLogin) {
-        //     console.log("已登录，跳转到首页");
-        //     // 跳转到首页
-        //     window.location.replace("#/");
-        // }
+    handChange(name,e,args){
+        this.setState({ showToptips: !this.state.showToptips});
+        let value = e.target.value;
+        for (const type of args) {
+            let tip = validata(name,type,value);
+            if(tip !== ""){
+                console.log(tip)
+                this.setState({ showToptips: !this.state.showToptips ,tipMsg:`${tip}`});
+                return false;
+            }
+        }
     }
 
     render() {
@@ -91,7 +78,7 @@ class App extends Component {
                             <Label>手机号</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="tel" placeholder="请输入手机号" onBlur={(e) =>this.handChange('手机号','required',e.target.value)}/>
+                            <Input type="tel" placeholder="请输入手机号" onBlur={(e) =>this.handChange('手机号',e,['required','isMoblie'])}/>
                         </CellBody>
                     </FormCell>
                     <FormCell vcode>
@@ -99,7 +86,7 @@ class App extends Component {
                             <Label>VCode</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="number" placeholder="请输入图形验证码" />
+                            <Input type="number" placeholder="请输入图形验证码" onBlur={(e) =>this.handChange('图形验证码',e,['required'])}/>
                         </CellBody>
                         <CellFooter>
                             <VCode src={vcodeSrc} />
@@ -110,7 +97,7 @@ class App extends Component {
                             <Label>短信验证码</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="tel" placeholder="请输入短信验证码" />
+                            <Input type="tel" placeholder="请输入短信验证码" onBlur={(e) =>this.handChange('短信验证码',e,['required'])}/>
                         </CellBody>
                         <CellFooter>
                             <Button type="vcode">Send</Button>
