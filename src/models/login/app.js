@@ -26,6 +26,8 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+        // 设置标题
+        document.title = 'login';
         this.handChange = this.handChange.bind(this);
         this.state = {
             tipMsg: '',
@@ -132,7 +134,7 @@ class App extends Component {
                             <Label>手机号</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="tel" placeholder="请输入手机号" name="phone" value={this.state.from.phone.value} onInput={this.handChange} />
+                            <Input type="tel" placeholder="请输入手机号" name="phone" value={this.state.from.phone.value} onInput={this.handChange} maxLength="11"/>
                         </CellBody>
                     </FormCell>
                     <FormCell vcode>
@@ -140,7 +142,7 @@ class App extends Component {
                             <Label>VCode</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="number" placeholder="请输入图形验证码" name="vcode" value={this.state.from.vcode.value} onInput={this.handChange} />
+                            <Input type="number" placeholder="请输入图形验证码" name="vcode" value={this.state.from.vcode.value} onInput={this.handChange} maxLength="4"/>
                         </CellBody>
                         <CellFooter>
                             <VCode src={vcodeSrc} />
@@ -151,7 +153,7 @@ class App extends Component {
                             <Label>短信验证码</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="tel" placeholder="请输入短信验证码" name="sms" value={this.state.from.sms.value} onInput={this.handChange} />
+                            <Input type="tel" placeholder="请输入短信验证码" name="sms" value={this.state.from.sms.value} onInput={this.handChange} maxLength="6"/>
                         </CellBody>
                         <CellFooter>
                             <Button type="vcode">Send</Button>
