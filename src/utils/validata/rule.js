@@ -72,6 +72,33 @@ const Rule = {
     isNumber: (value) => {
         return /^\d+$/g.test(value);
     },
+    /**
+     * 姓名[中文、长度2-10]
+     * 
+     * @param {any} value 
+     * @returns 
+     */
+    isZN:(value)=>{
+        return /[\u4E00-\u9FA5]{2,10}/.test(value);
+    },
+    /**
+     * 15|18位身份证号码验证
+     * 
+     * @param {any} value 
+     * @returns 
+     */
+    isCard:(value)=>{
+        return /([1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx])/.test(value);
+    },
+    /**
+     * 验证银行卡号[数字，长度10-19]
+     * 
+     * @param {any} value 
+     * @returns 
+     */
+    isBankNo:(value)=>{
+        return /[1-9]\d{10,19}/.test(value);
+    }
 };
 
 

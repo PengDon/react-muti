@@ -13,7 +13,10 @@ import {
 
   const routes = [
     {path:'/',component:Pages.Login, exact:true},
-    {path:'/home',component:Pages.Home}
+    {path:'/home',component:Pages.Home},
+    {path:'/auth',component:Pages.Auth},
+    {path:'/auth2',component:Pages.Auth2},
+    {path:'/bank',component:Pages.Bank}
   ];
 
   const App = (props,context)=>(

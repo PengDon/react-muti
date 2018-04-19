@@ -1,14 +1,17 @@
 import Server from '../utils/server';
 
-class User extends Server {
+class Auth extends Server {
     constructor() {
       super();
     }
     
-    async queryUserByName(name) {
-         let result;
-         try {
-            result = await this.post('/user/'+name);
+    async uploadImg(file) {
+        let result;
+        let formData = new FormData();
+		formData.append('file', file);
+         
+        try {
+            result = await this.post('/upload/uploadImg.do',formData);
         } catch (error) {
             throw error;
         }
@@ -25,4 +28,4 @@ class User extends Server {
         return result;
     }
 }
-export default new User;
+export default new Auth;
