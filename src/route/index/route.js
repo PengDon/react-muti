@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Pages from './page';
 import Cookie from '../../utils/cookie';
-
 import {
-    Switch,
-    HashRouter as Router,
-    Route
-    // IndexRoute,
-    // Link
-  } from 'react-router-dom';
+  Switch,
+  HashRouter as Router,
+  Route
+  // IndexRoute,
+  // Link
+} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from '../../reducers';
 
   const routes = [
     {path:'/',component:Pages.Login, exact:true},
@@ -31,7 +33,11 @@ import {
     </Router>
   )
   
-  
-  
-  ReactDOM.render(<App />, document.getElementById('root'));
+  const store = createStore(reducers);
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <App /> 
+    </Provider>, 
+    document.getElementById('root'));
     
