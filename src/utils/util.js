@@ -7,14 +7,14 @@
 // util 的私有属性
 
 class Util {
-    
+
 
     /**
      * Creates an instance of Util.
      * @memberof Util
      */
     constructor() {
-       this.doc = window.document;
+        this.doc = window.document;
     }
 
     /**
@@ -175,6 +175,18 @@ class Util {
                 this.doc.removeEventListener('touchmove', fn);
             }
         }
+    }
+    /**
+     * 根据关键字过滤数组对象返回新的数组对象
+     * 
+     * @static
+     * @param {any} key 关键字
+     * @param {any} arr 数组对象
+     * @param {any} attribute 对象对应的属性
+     * @memberof Util
+     */
+    static filterArrObj(key, arr,attribute) {
+        return arr.filter((v)=>v[attribute].indexOf(key)>-1);
     }
 
 }

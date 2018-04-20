@@ -1,4 +1,6 @@
 import Server from '../utils/server';
+import '../mock/api';
+import qs from 'qs';
 
 class Auth extends Server {
     constructor() {
@@ -18,10 +20,14 @@ class Auth extends Server {
          return result;
     }
 
-    async queryUser() {
+    async getBankAll(text){
         let result;
+        let params = {};
+        params.key = text;
+
         try {
-            result = await this.get('/user');
+            result = await this.post('/bankList',qs.stringify(params));
+            console.log(result);
         } catch (error) {
             throw error;
         }

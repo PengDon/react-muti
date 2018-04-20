@@ -128,7 +128,7 @@ class App extends Component {
     // 登录 
     login = async () => {
         // 验证通过，继续执行
-        if (this.isPass()) {
+        if (await this.isPass()) {
             // 调用登录接口
             let args = [this.state.from.phone.value, this.state.from.sms.value];
             let result = await Login.login(...args);

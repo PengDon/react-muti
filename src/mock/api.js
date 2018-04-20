@@ -1,6 +1,7 @@
 import Mock from 'mockjs';
 import qs from 'qs';
 import Util from '../utils/util';
+import BankList from './bankData.json';
 
 const login = {
     phone: '',
@@ -47,9 +48,18 @@ Mock.mock('/login', (res) => {
     // 错误情况
     result.msg = '短信验证码错误，请重新输入！';
     // 如果短信验证码相同
-    if(args.smsCode === login.smsCode){
+    if(args.smsCode && args.smsCode === login.smsCode){
        result.status = 200;
        result.msg = '登录成功，页面将会跳转';
+    }
+    return result;
+});
+
+Mock.mock('/bankList',(res)=>{
+    let args = qs.parse(res.body);
+    if(args.key && args.key !== ""){
+        result.status = 200;
+        result.data = Util.filterArrObj(args.key,BankList,'bankName');
     }
     return result;
 });
