@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import '../../assets/style/mgjc.less';
 import {
     Page,
@@ -32,6 +33,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+        this.recordBank = this.recordBank.bind(this);
         this.state = {
             showToptips: false,
             tipMsg: '',
@@ -45,10 +47,10 @@ class App extends Component {
         this.setState({ showToptips: !this.state.showToptips, tipMsg: `${tip}` });
         window.setTimeout(e => this.setState({ showToptips: !this.state.showToptips }), 2000);
     }
-
+    // 监听输入，根据接口返回数据渲染搜索结果
     async handleChange(text, e) {
-        if(text === ""){
-            return ;
+        if (text === "") {
+            return;
         }
         let searchResults = [];
         searchResults = await Auth.getBankAll(text);
@@ -58,46 +60,43 @@ class App extends Component {
             searchText: text,
         });
     }
-
+    // 记录选中的支行
     recordBank(e) {
-       console.log(e.target.innerText);
+        console.log(this);
+        console.log(e.target.innerText);
+         // js控制页面跳转
+         this.props.history.push({ pathname: '/auth' });
     }
 
-
-
     render() {
-        // console.log(this.state.from);
         return (
             <Page className="flex" title="Flex" subTitle="" spacing>
-
-                    <SearchBar
-                        onChange={this.handleChange.bind(this)}
-                        defaultValue={this.state.searchText}
-                        placeholder="请输入搜索关键词"
-                        lang={{
-                            cancel: '取消'
-                        }}
-                    />
-                    
+                <SearchBar
+                    onChange={this.handleChange.bind(this)}
+                    defaultValue={this.state.searchText}
+                    placeholder="请输入搜索关键词"
+                    lang={{
+                        cancel: '取消'
+                    }}
+                />
                 <PullToRefresh>
                     <CellsTitle>bank list</CellsTitle>
                     <Cells>
-                    {
+                        {
                             this.state.searchResults.length > 0 ?
-                                this.state.searchResults.map((item,i)=>{
+                                this.state.searchResults.map((item, i) => {
                                     return (
                                         <Cell href="javascript:;" key={i} access>
-                                        <CellBody onClick={this.recordBank}>{item.bankName}</CellBody>  
-                                        <CellFooter/>
-                                </Cell>
+                                            <CellBody onClick={this.recordBank}>{item.bankName}</CellBody>
+                                            <CellFooter />
+                                        </Cell>
                                     )
                                 })
-                                : <CellsTitle>can't fount any</CellsTitle>
+                                : <CellsTitle>no match info</CellsTitle>
                         }
                     </Cells>
 
                 </PullToRefresh>
-
                 <Toptips type="warn" show={this.state.showToptips}>
                     {this.state.tipMsg}
                 </Toptips>

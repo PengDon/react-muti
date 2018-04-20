@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import '../../assets/style/mgjc.less';
 import './app.css';
 import {
@@ -28,6 +29,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+        this.changeBank = this.changeBank.bind(this);
         this.next = this.next.bind(this);
         this.state = {
             showToptips: false,
@@ -89,10 +91,6 @@ class App extends Component {
         }
     }
 
-    componentWillMount() {
-
-    }
-
     hideSubBankList() {
         this.setState({
             fullpage_show: false
@@ -152,6 +150,13 @@ class App extends Component {
             from: obj
         });
     }
+    
+    // 选择支行
+    changeBank(e) {
+        console.log(e);
+        // js控制页面跳转
+        this.props.history.push({ pathname: '/bank' });
+    }
 
     next(e) {
         // 验证通过，继续执行
@@ -204,7 +209,7 @@ class App extends Component {
                             <Label>开户支行</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="text" name="subBankName" readOnly placeholder="请选择开户支行" onClick={e => this.setState({ fullpage_show: true })} onInput={this.handChange} />
+                            <Input type="text" name="subBankName" readOnly placeholder="请选择开户支行" onClick={this.changeBank} onInput={this.handChange} />
                         </CellBody>
                         <CellFooter />
                     </Cell>
