@@ -29,7 +29,7 @@ Mock.mock('/sendSmsCode', (res) => {
     result.msg = '图形验证码不正确，请重新输入！';
 
     // 如果图形验证码相同
-    if (args.imgCode === login.imgCode) {
+    if (args.imgCode.toLowerCase() === login.imgCode.toLowerCase()) {
         let smsCode = Mock.Random.integer(100000, 999999);
         console.log("短信验证码====" + smsCode);
         // 记录生成的数据
