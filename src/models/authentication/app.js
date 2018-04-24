@@ -21,6 +21,7 @@ import {
 import validata from "../../utils/validata/index";
 import srcDefault from './images/zm_default.png';
 import Auth from '../../services/auth';
+import Env from '../../utils/env.json';
 
 const BankList = [{ "value": "", "label": "请选择开户行" }, { "value": "建设银行", "label": "建设银行" }, { "value": "工商银行", "label": "工商银行" }, { "value": "中国银行", "label": "中国银行" }, { "value": "农业银行", "label": "农业银行" }, { "value": "民生银行", "label": "民生银行" }, { "value": "兴业银行", "label": "兴业银行" }, { "value": "浦发银行", "label": "浦发银行" }, { "value": "招商银行", "label": "招商银行" }, { "value": "平安银行", "label": "平安银行" }, { "value": "交通银行", "label": "交通银行" }, { "value": "广发银行", "label": "广发银行" }, { "value": "邮储银行", "label": "邮储银行" }, { "value": "光大银行", "label": "光大银行" }, { "value": "华夏银行", "label": "华夏银行" }, { "value": "北京银行", "label": "北京银行" }, { "value": "浦东银行", "label": "浦东银行" }, { "value": "长沙银行", "label": "长沙银行" }, { "value": "台州银行", "label": "台州银行" }, { "value": "天津银行", "label": "天津银行" }, { "value": "大连银行", "label": "大连银行" }, { "value": "南京银行", "label": "南京银行" }, { "value": "泉州银行", "label": "泉州银行" }, { "value": "宁波银行", "label": "宁波银行" }, { "value": "包商银行", "label": "包商银行" }, { "value": "东莞商行", "label": "东莞商行" }, { "value": "温州银行", "label": "温州银行" }, { "value": "汉口银行", "label": "汉口银行" }, { "value": "江苏银行", "label": "江苏银行" }, { "value": "东莞农村商业银行", "label": "东莞农村商业银行" }, { "value": "北京农商行", "label": "北京农商行" }];
 
@@ -165,6 +166,16 @@ class App extends Component {
         }
     }
 
+    componentWillMount(){
+        let obj = { ...this.state.from };
+          // 更新对应input的值
+          obj['subBankName'].value = Env.auth.subBankName;
+        // 更新状态
+        this.setState({
+            from: obj
+        });
+    }
+
     render() {
         // console.log(this.state.from);
         return (
@@ -209,7 +220,7 @@ class App extends Component {
                             <Label>开户支行</Label>
                         </CellHeader>
                         <CellBody>
-                            <Input type="text" name="subBankName" readOnly placeholder="请选择开户支行" onClick={this.changeBank} onInput={this.handChange} />
+                            <Input type="text" name="subBankName" readOnly placeholder="请选择开户支行" value={this.state.from.subBankName.value} onClick={this.changeBank} onInput={this.handChange} />
                         </CellBody>
                         <CellFooter />
                     </Cell>

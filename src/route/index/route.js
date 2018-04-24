@@ -9,9 +9,6 @@ import {
   // IndexRoute,
   // Link
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from '../../reducers';
 
   const routes = [
     {path:'/',component:Pages.Login, exact:true},
@@ -33,11 +30,7 @@ import reducers from '../../reducers';
     </Router>
   )
   
-  const store = createStore(reducers);
-
   ReactDOM.render(
-    <Provider store={store}>
-      <App /> 
-    </Provider>, 
+      <App />,
     document.getElementById('root'));
     
